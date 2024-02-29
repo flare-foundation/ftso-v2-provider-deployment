@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+set -eu
+
+ROOT_DIR="$(pwd)"
+
+prepare_build_dir() {
+    if ! [ -d "./build" ]; then
+        mkdir "./build"
+    fi
+}
+
+clone_repo() {
+    NO_TOKEN_HTTP_URL="$1"
+    PUBLIC_REPO="$1"
+    BRANCH="${3:-main}"
+    DESTINATION="./build/$4"
+
+    CLONE_SSH_URL=$(sed -E "s/https?:\/\/([^/]*)+\//git@\1:/" <<<"$NO_TOKEN_HTTP_URL")
+    CLONE_HTTP_URL="$NO_TOKEN_HTTP_URL"
+
+    if [ ! -z "$GITLAB_TOKEN" ] && [ ! "$PUBLIC_REPO" = "true" ]; then
+        # convert https://gitlab.com... type url into https://oauth2:token@gitlab.com...
+        CLONE_HTTP_URL=$(sed "s/\/\//\/\/oauth2:$GITLAB_TOKEN@/" <<<"$CLONE_HTTP_URL")
+    fi
+
+    if [ -d "$DESTINATION" ]; then
+        echo -e "\n$DESTINATION exists, pulling..."
+        cd "$DESTINATION"
+        git pull
+        cd - >/dev/null
+    else
+        if [ -z "$GITLAB_TOKEN" ] && [ ! "$PUBLIC_REPO" = "true" ]; then
+            echo -e "\ncloning $CLONE_SSH_URL"
+            git clone --branch "$BRANCH" "$CLONE_SSH_URL" "$DESTINATION"
+        else
+            echo -e "\ncloning $NO_TOKEN_HTTP_URL"
+            git clone --branch "$BRANCH" "$CLONE_HTTP_URL" "$DESTINATION"
+        fi
+    fi
+}
+
+flare_system_c_chain_indexer() {
+    clone_repo "https://gitlab.com/flarenetwork/flare-system-c-chain-indexer.git" \
+        "false" \
+        "$FLARE_SYSTEM_C_INDEXER_BRANCH" \
+        "flare-system-c-chain-indexer"
+}
+
+flare_system_client() {
+    clone_repo "https://gitlab.com/flarenetwork/flare-system-client.git" \
+        "false" \
+        "$FLARE_SYSTEM_CLIENT_BRANCH" \
+        "flare-system-client/"
+}
+
+ftso_scaling() {
+    clone_repo "https://gitlab.com/flarenetwork/ftso-scaling.git" \
+        "false" \
+        "$FTSO_SCALING_BRANCH" \
+        "ftso-scaling/"
+}
+
+main() {
+    source <(grep -v '^#' "./.env" | sed -E 's|^(.+)=(.*)$|: ${\1=\2}; export \1|g')
+
+    case "${1}" in
+    clean)
+        rm -rf "./build"
+        ;;
+    pull)
+        echo "pulling repositories"
+        prepare_build_dir
+        flare_system_c_chain_indexer
+        flare_system_client
+        ftso_scaling
+        ;;
+    *)
+        return 1
+        ;;
+    esac
+}
+
+main "$@"

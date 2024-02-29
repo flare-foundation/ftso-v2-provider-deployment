@@ -1,0 +1,70 @@
+[indexer]
+start_index = 0 # the number of the block that the indexer will start with
+stop_index = 0 # the number of the block that the indexer will stop with; set 0 or skip to index indefinitely
+num_parallel_req = 100 # the number of threads doing requests to the chain in parallel
+batch_size = 1000 # the number of blocks that will be pushed to a database in a batch (should be divisible by num_parallel_req)
+log_range = 10 # the size of the interval of blocks used to request logs in each request; suggested value is log_range = batch_size / num_parallel_req; note that a blockchain node might have an upper bound on this
+new_block_check_millis = 1000 # interval for checking for new blocks
+
+[[indexer.collect_transactions]]
+contract_address = "$SUBMISSION" # Submission
+func_sig = "6c532fae"
+status = true
+collect_events = true
+
+[[indexer.collect_transactions]]
+contract_address = "$SUBMISSION" # Submission
+func_sig = "9d00c9fd"
+status = true
+collect_events = true
+
+[[indexer.collect_transactions]]
+contract_address = "$SUBMISSION" # Submission
+func_sig = "57eed580"
+status = true
+collect_events = true
+
+[[indexer.collect_transactions]]
+contract_address = "$RELAY" # Relay
+func_sig = "b59589d1"
+status = true
+collect_events = true
+
+
+[[indexer.collect_logs]]
+contract_address = "$FLARE_SYSTEMS_MANAGER" # FlareSystemsManager
+topic = "undefined"
+
+[[indexer.collect_logs]]
+contract_address = "$VOTER_REGISTRY" # VoterRegistry
+topic = "undefined"
+
+[[indexer.collect_logs]]
+contract_address = "$FLARE_SYSTEMS_CALCULATOR" # FlareSystemsCalculator
+topic = "undefined"
+
+[[indexer.collect_logs]]
+contract_address = "$RELAY" # Relay
+topic = "undefined"
+
+[[indexer.collect_logs]]
+contract_address = "$FTSO_REWARD_OFFERS_MANAGER" # FtsoRewardOffersManager
+topic = "undefined"
+
+[db]
+host = "c-indexer-db"
+port = 3306
+database = "flare_ftso_indexer"
+username = "root"
+password = "root"
+log_queries = false
+drop_table_at_start = true
+history_drop = 0
+
+[logger]
+level = "INFO"
+file = "/tmp/flare-ftso-indexer.log"
+console = true
+
+[chain]
+node_url = "${NODE_RPC_URL}"

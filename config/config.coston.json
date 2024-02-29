@@ -1,0 +1,204 @@
+{
+    "testDeployment": false,
+    "submissionDeployerPrivateKey": "<use .env: SUBMISSION_DEPLOYER_PRIVATE_KEY>",
+    "deployerPrivateKey": "<use .env: DEPLOYER_PRIVATE_KEY>",
+    "genesisGovernancePrivateKey": "<use .env: GENESIS_GOVERNANCE_PRIVATE_KEY>",
+    "governancePublicKey": "<use .env: GOVERNANCE_PUBLIC_KEY>",
+    "governancePrivateKey": "<use .env: GOVERNANCE_PRIVATE_KEY>",
+    "governanceTimelock": 3600,
+    "governanceExecutorPublicKey": "<use .env: GOVERNANCE_EXECUTOR_PUBLIC_KEY>",
+    "initialRewardEpochOffset": 1,
+    "initialRandomVotePowerBlockSelectionSize": 100,
+    "initialVoters": ["<use .env: INITIAL_VOTER_PRIVATE_KEY>"],
+    "initialNormalisedWeights": [65535],
+    "initialThreshold": 32768,
+    "initialVoterData": [
+        {
+            "voter": "0x1d415d28380ff51a507f7b176ca5f27833f7fffd",
+            "delegationAddress": "0xb849b93b585effb7ce4b522ff88d9b3b24955f24",
+            "nodeIds": []
+        },
+        {
+            "voter": "0xf0b444bdc5522e908ff903e3f1730b5ab60b610a",
+            "delegationAddress": "0x07f5053c867ae107db15a38aa4421b2c24ac4e51",
+            "nodeIds": []
+        },
+        {
+            "voter": "0xc6cb03a22213a3e02186a3126d47c7fba20e4ef5",
+            "delegationAddress": "0xabaa1718c2d80fc037bf66e3f66f0975d67431a9",
+            "nodeIds": []
+        },
+        {
+            "voter": "0x2e46e8d1f3636f7036978d054b0a07e7395053c8",
+            "delegationAddress": "0xe80c39eae57c0359ee6c4086e2b22300353728e1",
+            "nodeIds": []
+        },
+        {
+            "voter": "0xca84d6086c5b32212a0cf1638803355d7be31482",
+            "delegationAddress": "0x55FcF7806F556204141Fe90FBe9Ce6207D9c52AC",
+            "nodeIds": []
+        }
+    ],
+    "initialFeedDecimalsList": [
+        {
+            "feedName": "BTC",
+            "decimals": 2
+        },
+        {
+            "feedName": "ETH",
+            "decimals": 3
+        },
+        {
+            "feedName": "XAU",
+            "decimals": 3
+        },
+        {
+            "feedName": "MKR",
+            "decimals": 3
+        },
+        {
+            "feedName": "XPT",
+            "decimals": 4
+        },
+        {
+            "feedName": "TAO",
+            "decimals": 4
+        },
+        {
+            "feedName": "BNB",
+            "decimals": 4
+        },
+        {
+            "feedName": "GNO",
+            "decimals": 4
+        },
+        {
+            "feedName": "BCH",
+            "decimals": 4
+        },
+        {
+            "feedName": "XMR",
+            "decimals": 4
+        },
+        {
+            "feedName": "SOL",
+            "decimals": 4
+        },
+        {
+            "feedName": "QNT",
+            "decimals": 4
+        },
+        {
+            "feedName": "AAVE",
+            "decimals": 4
+        },
+        {
+            "feedName": "BTT",
+            "decimals": 10
+        },
+        {
+            "feedName": "SHIB",
+            "decimals": 10
+        },
+        {
+            "feedName": "BONK",
+            "decimals": 10
+        },
+        {
+            "feedName": "LUNC",
+            "decimals": 10
+        },
+        {
+            "feedName": "1000SATS",
+            "decimals": 10
+        }
+    ],
+
+    "firstVotingRoundStartTs": 1658430000,
+    "votingEpochDurationSeconds": 90,
+    "firstRewardEpochStartVotingRoundId": 0,
+    "rewardEpochDurationInVotingEpochs": 240,
+    "relayThresholdIncreaseBIPS": 12000,
+    "newSigningPolicyInitializationStartSeconds": 7200,
+    "randomAcquisitionMaxDurationSeconds": 14400,
+    "randomAcquisitionMaxDurationBlocks": 1920,
+    "newSigningPolicyMinNumberOfVotingRoundsDelay": 3,
+    "voterRegistrationMinDurationSeconds": 1800,
+    "voterRegistrationMinDurationBlocks": 240,
+    "submitUptimeVoteMinDurationSeconds": 600,
+    "submitUptimeVoteMinDurationBlocks": 80,
+    "signingPolicyThresholdPPM": 500000,
+    "signingPolicyMinNumberOfVoters": 3,
+    "rewardExpiryOffsetSeconds": 604800,
+    "maxNodeIdsPerEntity": 0,
+    "maxVotersPerRewardEpoch": 100,
+    "wNatCapPPM": 25000,
+    "signingPolicySignNonPunishableDurationSeconds": 1200,
+    "signingPolicySignNonPunishableDurationBlocks": 160,
+    "signingPolicySignNoRewardsDurationBlocks": 160,
+    "feePercentageUpdateOffset": 2,
+    "defaultFeePercentageBIPS": 2000,
+    "pChainStakeEnabled": false,
+
+    "ftsoProtocolId": 100,
+    "minimalRewardsOfferValueNAT": 1000,
+    "decimalsUpdateOffset": 2,
+    "defaultDecimals": 5,
+    "feedsHistorySize": 200,
+    "ftsoInflationConfigurations": [
+        {
+            "feedNames": ["FLR", "SGB", "BTC", "XRP", "LTC", "XLM", "DOGE", "ADA", "ALGO", "ETH", "FIL", "ARB", "AVAX", "BNB", "MATIC", "SOL", "USDC", "USDT", "XDC", "TRX", "DOT", "SHIB", "UNI", "HBAR", "NEAR", "VET", "RNDR", "STRK", "AAVE", "QNT", "XTZ", "GALA", "ATOM", "ETC", "BEAM", "IMX", "STX", "APT", "OP", "ICP", "INJ", "TIA", "GRT", "SUI", "LDO", "XAU", "XAG", "XPT", "EUR", "JPY", "AUD"],
+            "inflationShareBIPS": 10000,
+            "minRewardedTurnoutBIPS": 5000,
+            "mode": 0,
+            "primaryBandRewardSharePPM": 700000,
+            "secondaryBandWidthPPMs": [400, 500, 100, 150, 200, 200, 200, 200, 200, 150, 200, 100, 100, 100, 100, 100, 100, 100, 400, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }
+    ],
+
+    "inflationReceivers": [
+        {
+            "oldContract": false,
+            "contractName": "FtsoRewardOffersManager",
+            "sharingBIPS": 5000,
+            "topUpType": 1,
+            "topUpFactorx100": 0
+        },
+        {
+            "oldContract": true,
+            "contractName": "FtsoRewardManager",
+            "sharingBIPS": 5000,
+            "topUpType": 0,
+            "topUpFactorx100": 400
+        }
+    ],
+
+    "flareDaemonizedContracts": [
+        {
+            "oldContract": true,
+            "contractName": "Inflation",
+            "gasLimit": 3000000
+        },
+        {
+            "oldContract": true,
+            "contractName": "FtsoManager",
+            "gasLimit": 40000000
+        },
+        {
+            "oldContract": false,
+            "contractName": "FlareSystemsManager",
+            "gasLimit": 40000000
+        }
+    ],
+    "proposers": [
+        "0x1a16DC5ec4f48Ed769949855C3bC3a1d10c72A95",
+        "0x893baB99798BCF5e0faB09Ad5CE61872B951F0a5",
+        "0x2da78A7908A89038832f920869a5526c20689904"
+    ],
+    "maintainer": "0x25365AA95F57768d598cA6C938f93F7a8D2469E8",
+    "votingDelaySeconds": 3600,
+    "votingPeriodSeconds": 86400,
+    "thresholdConditionBIPS": 6600,
+    "majorityConditionBIPS": 5000,
+    "proposalFeeValueNAT": 100
+}

@@ -1,0 +1,7 @@
+# build directory
+build/
+
+# mounts
+mounts/
+
+.env
