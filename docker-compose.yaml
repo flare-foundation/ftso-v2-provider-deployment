@@ -20,16 +20,14 @@ services:
       - ./mounts/scaling/.env
     command: "yarn start"
 
-  price-provider:
-    container_name: ${COMPOSE_PROJECT_NAME}-price-provider
-    image: ftso-v2-deployment/ftso-scaling
-    env_file:
-      - ./mounts/scaling/.env
-    command: "yarn start example_provider"
-
   client:
     container_name: ${COMPOSE_PROJECT_NAME}-client
     image: ftso-v2-deployment/flare-system-client
     volumes:
       - ./mounts/client/credentials/:/app/credentials/
       - ./mounts/client/config.toml:/app/config.toml
+    environment:
+      SYSTEM_CLIENT_SENDER_PRIVATE_KEY: ${IDENTITY_PK}
+      SIGNING_POLICY_PRIVATE_KEY: ${SIGNING_PK}
+      PROTOCOL_MANAGER_SUBMIT_PRIVATE_KEY: ${SUBMIT_PK}
+      PROTOCOL_MANAGER_SUBMIT_SIGNATURES_PRIVATE_KEY: ${SIGNATURES_PK}

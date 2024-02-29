@@ -30,12 +30,6 @@ relay = "$RELAY"
 [identity]
 address = "$IDENTITY" # identity account not private key
 
-[credentials]
-system_client_sender_private_key_file = "/app/credentials/sender-private-key.txt" # any account
-signing_policy_private_key_file = "/app/credentials/policy-private-key.txt" # for signing and submitting votes
-protocol_manager_submit_private_key_file = "/app/credentials/submit-private-key.txt"
-protocol_manager_submit_signatures_private_key_file = "/app/credentials/signatures-private-key.txt"
-
 [clients]
 enabled_registration = true       # enable/disable registration - send RegisterVoter and SignNewSigningPolicy txs
 enabled_protocol_voting = true
