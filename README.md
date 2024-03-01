@@ -31,16 +31,15 @@ Additionally, once in a reward epoch the **System Client** triggers voter regist
 
 Note: Account registration is required for FTSOv2 participation and must be done before starting any further deployment steps.
 
-To avoid nonce conflicts, **System Client** uses separate addresses for sending transactions at each voting round stage.
 Each data provider in the FTSOv2 system must set up and register the following 5 accounts:
 
-TODO: Describe accounts
-
-- `Identity`. Main account.
+- `Identity`. Main identity account of the voter. On mainnets this should be held in cold storage, it's required for initial data provider setup but not used during each round on voting.
 - `Submit`. Used for sending commit and reveal transactions.
-- `SubmitSignatures`. Used for sending voting round result signature transactions.
-- `SigningPolicy`. 
-- `Delegation`.
+- `SubmitSignatures`. Used for sending voting round result signature transactions. (To avoid nonce conflicts, **System Client** uses multiple accounts for submitting transactions).
+- `SigningPolicy`. Used for signature generation during the voting round, and reward epoch signing policy signing (it's a system protocol ran once during reward epoch to establish reward epoch settings, including valid voters and their weights).
+- `Delegation`. Account to which community should delegate funds (using WNat contract) to increase the vote power of the voter (identity/entity) - and also to later get the rewards. If not set, the identity account will be used.
+
+Accounts need to funded for gas fees, and the delegation account needs to contain wrapped funds to establish voting power. Wrapping can be done via the [portal](https://governance.dev.aflabs.org/) (make sure to pick Coston, not Coston2).
 
 Account registration is handled by the `EntityManager` smart contract, which for Coston can be accessed [here](https://coston-explorer.flare.network/address/0x35E74af3AfC322e1fCf187cB4970126D76fF9Dcd/write-contract#address-tabs).
 
