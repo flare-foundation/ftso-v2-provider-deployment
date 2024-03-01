@@ -23,7 +23,7 @@ The following is a very simplified description of a single voting round operatio
 
 Additionally, once in a reward epoch the **System Client** triggers voter registration, which allows participating in the following reward epoch.
 
-**Data Provider** obtains all commit and reveal data straight from encoded transaction calldata recored in the indexer database. All calls to `Submission` contract ar simply empty function invocations, with the actual submission data provided as additional calldata on the transaction.
+**Data Provider** obtains all commit and reveal data straight from encoded transaction calldata recorded in the indexer database. All calls to `Submission` contract are simply empty function invocations, with the actual submission data provided as additional calldata on the transaction.
 
 # Deployment
 
@@ -39,7 +39,7 @@ Each data provider in the FTSOv2 system must set up and register the following 5
 - `SigningPolicy`. Used for signature generation during the voting round, and reward epoch signing policy signing (it's a system protocol ran once during reward epoch to establish reward epoch settings, including valid voters and their weights).
 - `Delegation`. Account to which community should delegate funds (using WNat contract) to increase the vote power of the voter (identity/entity) - and also to later get the rewards. If not set, the identity account will be used.
 
-Accounts need to funded for gas fees, and the delegation account needs to contain wrapped funds to establish voting power. Wrapping can be done via the [portal](https://governance.dev.aflabs.org/) (make sure to pick Coston, not Coston2).
+Accounts need to be funded for gas fees. The delegation account is used of establishing voter power, which can be achieved by wrapping funds directly or by delegation from other accounts. Wrapping can be done via the [portal](https://governance.dev.aflabs.org/) (make sure to pick Coston, not Coston2).
 
 Account registration is handled by the `EntityManager` smart contract, which for Coston can be accessed [here](https://coston-explorer.flare.network/address/0x35E74af3AfC322e1fCf187cB4970126D76fF9Dcd/write-contract#address-tabs).
 
@@ -104,6 +104,8 @@ You will need:
     - [flare-system-c-chain-indexer](https://gitlab.com/flarenetwork/flare-system-c-chain-indexer)
 
 - Use `.env.example` to create `.env` file, eg.: using `cp .env.example .env`
+
+- Set private keys for required accounts in the `.env` file.
 
 - Use `./repos pull` to clone (first time) or pull (when cloned directories exist) projects. If you switch branches in .env file or you get errors while using `./repos pull` command, use `./repos clean` to delete files followed by `./repos pull` to clone them again. 
 
