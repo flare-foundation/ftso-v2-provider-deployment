@@ -27,11 +27,66 @@ Additionally, once in a reward epoch the **System Client** triggers voter regist
 
 # Deployment
 
-## Account preparation
+## Register accounts
 
-TODO
+Note: Account registration is required for FTSOv2 participation and must be done before starting any further deployment steps.
 
-## Dependencies
+To avoid nonce conflicts, **System Client** uses separate addresses for sending transactions at each voting round stage.
+Each data provider in the FTSOv2 system must set up and register the following 5 accounts:
+
+TODO: Describe accounts
+
+- `Identity`. Main account.
+- `Submit`. Used for sending commit and reveal transactions.
+- `SubmitSignatures`. Used for sending voting round result signature transactions.
+- `SigningPolicy`. 
+- `Delegation`.
+
+Account registration is handled by the `EntityManager` smart contract, which for Coston can be accessed [here](https://coston-explorer.flare.network/address/0x35E74af3AfC322e1fCf187cB4970126D76fF9Dcd/write-contract#address-tabs).
+
+The required contract invocation steps can be found in this [deployment task](https://github.com/flare-foundation/flare-smart-contracts-v2/blob/main/deployment/tasks/register-entities.ts#L33). You can check out the smart contract repo and run the task itself, or register accounts manually via the explorer UI link above. (It only needs to be done once).
+
+Instructions for the Hardhat deployment task:
+- Check out repo: https://github.com/flare-foundation/flare-smart-contracts-v2/
+- Build repo: `yarn c`
+- Create a JSON file with account keys:
+```
+[
+  {
+    "identity": {
+      "address": "0xca84d6086c5b32212a0cf1638803355d7be31482",
+      "privateKey": "<private key hex>"
+    },
+    "submit": {
+      "address": "0x7961de7ad159106a79187379a22d21c1e5a924db",
+      "privateKey": "<private key hex>"
+    },
+    "submitSignatures": {
+      "address": "0x7570c09c17f79aa50bab7ba385c0d5ca12c5b4d3",
+      "privateKey": "<private key hex>"
+    },
+    "signingPolicy": {
+      "address": "0x9ffa9cf5f677e925b6ecacbf66caefd7e1b9883a",
+      "privateKey": "<private key hex>"
+    },
+    "delegation": {
+      "address": "0x95288e962ff1893ef6c32ad4143fffb12e1eb15f",
+      "privateKey": "<private key hex>"
+    },
+  }
+]
+```
+- Set the following env vars in `.env`:
+```
+CHAIN_CONFIG="coston"
+ENTITIES_FILE_PATH="<path to account keys JSON>"
+```
+- Run task:
+```
+yarn hardhat --network coston register-entities
+```
+
+## Install dependencies
 
 You will need:
 - [jq](https://jqlang.github.io/jq/)
@@ -58,16 +113,18 @@ You will need:
 ## Start provider stack
 
 Using `./run run` 4 services will start:
-- c-chain-indexer-db
-- c-chain-indexer
-- flare-system-client
-- ftso-scaling data provider
+- `c-chain-indexer-db` - MySQL instance.
+- `c-chain-indexer` – **Indexer**.
+- `flare-system-client` **System Client**.
+- `ftso-scaling` - **Data Provider**.
 
-There will also be config files generated for everything inside `./mounts` directory
+There will also be config files generated for everything inside `./mounts` directory.
 
-## Price provider
+## Feed value provider
 
-Start your own price provider or alternatively use example provider shipped with `ftso-scaling` project
+Start your own feed value provider or alternatively use example provider shipped with `ftso-scaling` project
 ```bash
 docker run --rm --env-file "mounts/scaling/.env" -p 3101:3101 "ftso-v2-deployment/ftso-scaling" yarn start example_provider
 ```
+
+Once the container is running, you can find the API spec at: http://localhost:3101/api-doc.
