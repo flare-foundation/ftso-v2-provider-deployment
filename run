@@ -74,21 +74,26 @@ down() {
 }
 
 up() {
-    echo "cleaning configs from previous runs:"
-    cleanup=(
+    if [ -d "mounts" ] || [ -f "mounts" ]; then
+        echo "cleaning configs from previous runs:"
+        echo "rm -r mounts"
+        rm -r "mounts"
+    fi
+    echo ""
+
+    mount_dirs=(
         "mounts/client/"
+        "mounts/client/credentials/"
         "mounts/indexer/"
         "mounts/scaling/"
     )
 
-    for dest in "${cleanup[@]}"; do
-        if [ -d "$dest" ] || [ -f "$dest" ]; then
-            echo "rm -r $dest"
-            rm -r "$dest"
-        fi
+    echo "preparing mount dirs:"
+    for dest in "${mount_dirs[@]}"; do
+        echo "mkdir -p $dest"
+        mkdir -p "$dest"
     done
     echo ""
-
 
     echo "writing configs for indexer, client and scaling"
     write_c_chain_config
@@ -98,7 +103,7 @@ up() {
     docker compose up -d indexer-db
 
     echo -n "waiting for indexer db "
-    until ! [ -z "$(docker compose exec indexer-db mysqladmin ping --silent --host localhost -proot 2> /dev/null)" ]; do
+    until ! [ -z "$(docker compose exec indexer-db mysqladmin ping --silent --host 10.222.0.137 -proot 2> /dev/null)" ]; do
         sleep 1
         echo -n "."
     done
@@ -107,7 +112,7 @@ up() {
     docker compose up -d indexer data-provider
 
     echo -n "waiting for data provider "
-    until docker compose exec data-provider nc -z localhost 3100 2>/dev/null; do
+    until docker compose exec data-provider nc -z 10.222.0.137 3100 2>/dev/null; do
         sleep 1
         echo -n "."
     done

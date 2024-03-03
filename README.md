@@ -47,7 +47,7 @@ The required contract invocation steps can be found in this [deployment task](ht
 
 Instructions for the Hardhat deployment task:
 - Check out repo: https://github.com/flare-foundation/flare-smart-contracts-v2/
-- Build repo: `yarn c`
+- Build repo: `yarn` then `yarn c`
 - Create a JSON file with account keys:
 ```
 [
@@ -77,9 +77,14 @@ Instructions for the Hardhat deployment task:
 ```
 - Set the following env vars in `.env`:
 ```
+COSTON_RPC=rpctocoston
 CHAIN_CONFIG="coston"
 ENTITIES_FILE_PATH="<path to account keys JSON>"
 ```
+*Note 1: do not fill out other env variables from .env.template or running tasks will error*
+
+*Note 2: do not use public rpc because you will get rate limited during the task*
+
 - Run task:
 ```
 yarn hardhat --network coston register-entities
@@ -113,11 +118,12 @@ You will need:
 
 ## Start provider stack
 
-Using `./run run` 4 services will start:
+Using `./run up` 4 services will start:
 - `c-chain-indexer-db` - MySQL instance.
 - `c-chain-indexer` – **Indexer**.
 - `flare-system-client` **System Client**.
 - `ftso-scaling` - **Data Provider**.
+*Note: you can stop everything with `./run down`*
 
 There will also be config files generated for everything inside `./mounts` directory.
 

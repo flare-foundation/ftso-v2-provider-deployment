@@ -13,7 +13,7 @@ max_file_size = 10  # max file size before rotating, in MB
 console = true      # also log to console
 
 [metrics]
-prometheus_address = "localhost:2112"  # expose client metrics to this address (empty value does not expose this endpoint)
+prometheus_address = ""  # expose client metrics to this address (empty value does not expose this endpoint)
 
 [chain]
 node_url = "${NODE_RPC_URL}"  # node client address
