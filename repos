@@ -11,18 +11,9 @@ prepare_build_dir() {
 }
 
 clone_repo() {
-    NO_TOKEN_HTTP_URL="$1"
-    PUBLIC_REPO="$1"
-    BRANCH="${3:-main}"
-    DESTINATION="./build/$4"
-
-    CLONE_SSH_URL=$(sed -E "s/https?:\/\/([^/]*)+\//git@\1:/" <<<"$NO_TOKEN_HTTP_URL")
-    CLONE_HTTP_URL="$NO_TOKEN_HTTP_URL"
-
-    if [ ! -z "$GITLAB_TOKEN" ] && [ ! "$PUBLIC_REPO" = "true" ]; then
-        # convert https://gitlab.com... type url into https://oauth2:token@gitlab.com...
-        CLONE_HTTP_URL=$(sed "s/\/\//\/\/oauth2:$GITLAB_TOKEN@/" <<<"$CLONE_HTTP_URL")
-    fi
+    CLONE_URL="$1"
+    BRANCH="${2:-main}"
+    DESTINATION="./build/$3"
 
     if [ -d "$DESTINATION" ]; then
         echo -e "\n$DESTINATION exists, pulling..."
@@ -30,33 +21,25 @@ clone_repo() {
         git pull
         cd - >/dev/null
     else
-        if [ -z "$GITLAB_TOKEN" ] && [ ! "$PUBLIC_REPO" = "true" ]; then
-            echo -e "\ncloning $CLONE_SSH_URL"
-            git clone --branch "$BRANCH" "$CLONE_SSH_URL" "$DESTINATION"
-        else
-            echo -e "\ncloning $NO_TOKEN_HTTP_URL"
-            git clone --branch "$BRANCH" "$CLONE_HTTP_URL" "$DESTINATION"
-        fi
+        echo -e "\ncloning $CLONE_URL"
+        git clone --branch "$BRANCH" "$CLONE_URL" "$DESTINATION"
     fi
 }
 
 flare_system_c_chain_indexer() {
-    clone_repo "https://gitlab.com/flarenetwork/flare-system-c-chain-indexer.git" \
-        "false" \
+    clone_repo "https://github.com/flare-foundation/flare-system-c-chain-indexer.git" \
         "$FLARE_SYSTEM_C_INDEXER_BRANCH" \
         "flare-system-c-chain-indexer"
 }
 
 flare_system_client() {
-    clone_repo "https://gitlab.com/flarenetwork/flare-system-client.git" \
-        "false" \
+    clone_repo "https://github.com/flare-foundation/flare-system-client.git" \
         "$FLARE_SYSTEM_CLIENT_BRANCH" \
         "flare-system-client/"
 }
 
 ftso_scaling() {
-    clone_repo "https://gitlab.com/flarenetwork/ftso-scaling.git" \
-        "false" \
+    clone_repo "https://github.com/flare-foundation/ftso-scaling.git" \
         "$FTSO_SCALING_BRANCH" \
         "ftso-scaling/"
 }
