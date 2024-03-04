@@ -103,11 +103,6 @@ You will need:
 
 ## Set up repos and docker images
 
-- You will need a gitlab user with access to following repositories until they are made public:
-    - [ftso-scaling](https://gitlab.com/flarenetwork/ftso-scaling)
-    - [flare-system-client](https://gitlab.com/flarenetwork/flare-system-client)
-    - [flare-system-c-chain-indexer](https://gitlab.com/flarenetwork/flare-system-c-chain-indexer)
-
 - Use `.env.example` to create `.env` file, eg.: using `cp .env.example .env`
 
 - Set private keys for required accounts in the `.env` file.
