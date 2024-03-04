@@ -67,5 +67,5 @@ gas_limit = 2500000
 
 [gas_register]
 gas_price_multiplier = 1.5
-gas_price_fixed = 0
+gas_price_fixed = 0 
 gas_limit = 0
