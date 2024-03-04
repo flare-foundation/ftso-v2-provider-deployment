@@ -52,7 +52,7 @@ contract_address = "$FTSO_REWARD_OFFERS_MANAGER" # FtsoRewardOffersManager
 topic = "undefined"
 
 [db]
-host = "c-indexer-db"
+host = "indexer-db"
 port = 3306
 database = "flare_ftso_indexer"
 username = "root"
