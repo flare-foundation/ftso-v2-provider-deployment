@@ -57,16 +57,15 @@ max_rounds = 3          # max number of rounds to fetch data and submit signatur
 
 [finalizer]
 starting_reward_epoch = 0
-starting_voting_round = 1005
-start_offset = "500s"
-grace_period_end_offset = "70s"
+start_offset = "6h"
+grace_period_end_offset = "75s"
 
-[gas_submit]             
-gas_price_multiplier = 1.75 
-gas_price_fixed = 0
+[gas_submit]
+gas_price_multiplier = 0
+gas_price_fixed = 225000000000
 gas_limit = 2500000
 
 [gas_register]
 gas_price_multiplier = 1.5
-gas_price_fixed = 0 # 50 * 1e9 
-gas_limit = 0 
+gas_price_fixed = 0
+gas_limit = 0
