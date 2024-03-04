@@ -107,6 +107,8 @@ You will need:
 
 - Set private keys for required accounts in the `.env` file.
 
+- Set `NODE_RPC_URL` with your Coston node RPC endpoint in the `.env` file.
+
 - Use `./repos pull` to clone (first time) or pull (when cloned directories exist) projects. If you switch branches in .env file or you get errors while using `./repos pull` command, use `./repos clean` to delete files followed by `./repos pull` to clone them again. 
 
 - Use `./build.sh` to build docker images for all projects.
