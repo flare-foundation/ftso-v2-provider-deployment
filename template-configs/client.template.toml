@@ -19,7 +19,7 @@ prometheus_address = ""  # expose client metrics to this address (empty value do
 node_url = "${NODE_RPC_URL}"  # node client address
 api_key = "${NODE_API_KEY}"
 address_hrp = "local"  # HRP (human readable part) of chain -- used to properly encode/decode addresses
-chain_id = 19  # chain id
+chain_id = 16  # chain id
 eth_rpc_url = "${NODE_RPC_URL}"  # Ethereum RPC URL
 
 [contract_addresses] # update accoriing to deployed contracts
