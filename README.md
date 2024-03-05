@@ -128,7 +128,11 @@ There will also be config files generated for everything inside `./mounts` direc
 
 Start your own feed value provider or alternatively use example provider shipped with `ftso-scaling` project
 ```bash
-docker run --rm --env-file "mounts/scaling/.env" -p 3101:3101 "ftso-v2-deployment/ftso-scaling" yarn start example_provider
+docker run --rm \
+  --env-file "mounts/scaling/.env" \
+  -p 3101:3101 "ftso-v2-deployment/ftso-scaling" \
+  --network "ftso-v2-deployment_default" \
+  yarn start example_provider
 ```
 
 Once the container is running, you can find the API spec at: http://localhost:3101/api-doc.
