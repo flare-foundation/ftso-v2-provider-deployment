@@ -113,15 +113,6 @@ You will need:
 
 - Use `./build.sh` to build docker images for all projects.
 
-## Feed value provider
-
-Start your own feed value provider or alternatively use example provider shipped with `ftso-scaling` project
-```bash
-docker run --rm --env-file "mounts/scaling/.env" -p 3101:3101 "ftso-v2-deployment/ftso-scaling" yarn start example_provider
-```
-
-Once the container is running, you can find the API spec at: http://localhost:3101/api-doc.
-
 ## Start provider stack
 
 Using `./run up` 4 services will start:
@@ -132,6 +123,17 @@ Using `./run up` 4 services will start:
 *Note: you can stop everything with `./run down`*
 
 There will also be config files generated for everything inside `./mounts` directory.
+
+## Feed value provider
+
+Start your own feed value provider or alternatively use example provider shipped with `ftso-scaling` project
+```bash
+docker run --rm --env-file "mounts/scaling/.env" -p 3101:3101 "ftso-v2-deployment/ftso-scaling" yarn start example_provider
+```
+
+Once the container is running, you can find the API spec at: http://localhost:3101/api-doc.
+
+## How do I know it's working
 
 You will see various errors initially on `ftso-scaling` and `flare-system-client`, since the data provider will not be registered as a voter for the current reward epoch. There is a time window for voter registration on every reward epoch, and if you leave things running you should eventually see `RegisterVoter success` logged by `flare-system-client`. It should then start submitting data successfully in the *following* reward epoch.
 
