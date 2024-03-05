@@ -1,10 +1,5 @@
-x-extra-hosts: &hosts
-  extra_hosts:
-    - "coston-api.flare.network:10.222.0.137"
-
 services:
   indexer-db:
-    << : *hosts
     container_name: ${COMPOSE_PROJECT_NAME}-indexer-db
     image: "mysql"
     environment:
@@ -13,14 +8,12 @@ services:
       - ./config/init.sql:/docker-entrypoint-initdb.d/db_init.sql
 
   indexer:
-    << : *hosts
     container_name: ${COMPOSE_PROJECT_NAME}-indexer
     image: ftso-v2-deployment/flare-system-c-indexer
     volumes:
       - ./mounts/indexer/config.toml:/app/config.toml
 
   data-provider:
-    << : *hosts
     container_name: ${COMPOSE_PROJECT_NAME}-data-provider
     image: ftso-v2-deployment/ftso-scaling
     env_file:
@@ -28,7 +21,6 @@ services:
     command: "yarn start"
 
   client:
-    << : *hosts
     container_name: ${COMPOSE_PROJECT_NAME}-client
     image: ftso-v2-deployment/flare-system-client
     volumes:
