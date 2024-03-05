@@ -130,8 +130,9 @@ Start your own feed value provider or alternatively use example provider shipped
 ```bash
 docker run --rm \
   --env-file "mounts/scaling/.env" \
-  --publish "0.0.0.0:3101:3101" "ftso-v2-deployment/ftso-scaling" \
+  --publish "0.0.0.0:3101:3101" \
   --network "ftso-v2-deployment_default" \
+  "ftso-v2-deployment/ftso-scaling" \
   yarn start example_provider
 ```
 
