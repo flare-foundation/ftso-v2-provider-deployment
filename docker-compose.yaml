@@ -12,6 +12,7 @@ services:
     image: ftso-v2-deployment/flare-system-c-indexer
     volumes:
       - ./mounts/indexer/config.toml:/app/config.toml
+    restart: unless-stopped
 
   data-provider:
     container_name: ${COMPOSE_PROJECT_NAME}-data-provider
