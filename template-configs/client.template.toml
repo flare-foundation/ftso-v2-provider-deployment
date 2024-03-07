@@ -61,8 +61,8 @@ start_offset = "6h"
 grace_period_end_offset = "75s"
 
 [gas_submit]
-gas_price_multiplier = 0
-gas_price_fixed = 225000000000
+gas_price_multiplier = 1.5
+gas_price_fixed = 0
 gas_limit = 2500000
 
 [gas_register]
