@@ -138,6 +138,22 @@ docker run --rm \
 
 Once the container is running, you can find the API spec at: http://localhost:3101/api-doc.
 
+Note: some users reported issues with getting the provider to start. For initial testing a "fixed" value provider can be used that simply returns a constant instead of reading data from exchanges. It can be started by setting an extra env variable `PRICE_PROVIDER_IMPL=fixed`:
+```bash
+docker run --rm \
+  --env-file "mounts/scaling/.env" \
+  --env PRICE_PROVIDER_IMPL=fixed \
+  --publish "0.0.0.0:3101:3101" \
+  --network "ftso-v2-deployment_default" \
+  "ftso-v2-deployment/ftso-scaling" \
+  yarn start example_provider
+```
+
+You should see the following in the logs:
+```
+WARN [FixedFeed] Initializing FixedFeed, will return 0.01 for all feeds.
+```
+
 ## How do I know it's working
 
 You will see various errors initially on `ftso-scaling` and `flare-system-client`, since the data provider will not be registered as a voter for the current reward epoch. There is a time window for voter registration on every reward epoch, and if you leave things running you should eventually see `RegisterVoter success` logged by `flare-system-client`. It should then start submitting data successfully in the *following* reward epoch.
