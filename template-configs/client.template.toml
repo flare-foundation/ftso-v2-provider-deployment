@@ -42,7 +42,7 @@ api_endpoint = "http://data-provider:3100/"
 x_api_key = "abcdef"
 
 [submit1]
-start_offset = "80s"   # start fetching data and submitting txs after this offset from the start of the epoch
+start_offset = "75s"   # start fetching data and submitting txs after this offset from the start of the epoch
 tx_submit_retries = 1  # number of retries for submitting txs
 
 [submit2]
@@ -58,7 +58,7 @@ max_rounds = 3          # max number of rounds to fetch data and submit signatur
 [finalizer]
 starting_reward_epoch = 0
 start_offset = "6h"
-grace_period_end_offset = "75s"
+grace_period_end_offset = "65s"
 
 [gas_submit]
 gas_price_multiplier = 1.5
