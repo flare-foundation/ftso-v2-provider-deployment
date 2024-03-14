@@ -81,7 +81,7 @@ COSTON_RPC=rpctocoston
 CHAIN_CONFIG="coston"
 ENTITIES_FILE_PATH="<path to account keys JSON>"
 ```
-*Note 1: do not fill out other env variables from .env.template or running tasks will error*
+*Note 1: do not use .env.template, instead just create .env using above example or running tasks will error*
 
 *Note 2: do not use public rpc because you will get rate limited during the task*
 
