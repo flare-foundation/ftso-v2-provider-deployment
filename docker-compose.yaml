@@ -6,6 +6,12 @@ services:
       MYSQL_ROOT_PASSWORD: "root"
     volumes:
       - ./config/init.sql:/docker-entrypoint-initdb.d/db_init.sql
+      - indexer_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
 
   indexer:
     container_name: ${COMPOSE_PROJECT_NAME}-indexer
@@ -13,6 +19,9 @@ services:
     volumes:
       - ./mounts/indexer/config.toml:/app/config.toml
     restart: unless-stopped
+    depends_on:
+      indexer_db:
+        condition: service_healthy
 
   data-provider:
     container_name: ${COMPOSE_PROJECT_NAME}-data-provider
@@ -20,6 +29,8 @@ services:
     env_file:
       - ./mounts/scaling/.env
     command: "yarn start"
+    depends_on:
+      - indexer
 
   client:
     container_name: ${COMPOSE_PROJECT_NAME}-client
@@ -32,3 +43,8 @@ services:
       SIGNING_POLICY_PRIVATE_KEY: ${SIGNING_PK}
       PROTOCOL_MANAGER_SUBMIT_PRIVATE_KEY: ${SUBMIT_PK}
       PROTOCOL_MANAGER_SUBMIT_SIGNATURES_PRIVATE_KEY: ${SIGNATURES_PK}
+    depends_on:
+      - indexer
+
+volumes:
+  indexer_data:

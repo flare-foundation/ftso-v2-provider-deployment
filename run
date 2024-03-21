@@ -69,11 +69,9 @@ write_ftso_scaling_config() {
     envsubst < template-configs/scaling.env > "$CONFIG_FILE"
 }
 
-down() {
-    docker compose down
-}
+main() {
+    source <(grep -v '^#' "./.env" | sed -E 's|^(.+)=(.*)$|: ${\1=\2}; export \1|g')
 
-up() {
     if [ -d "mounts" ] || [ -f "mounts" ]; then
         echo "cleaning configs from previous runs:"
         echo "rm -r mounts"
@@ -99,46 +97,6 @@ up() {
     write_c_chain_config
     write_system_client_config
     write_ftso_scaling_config
-
-    docker compose up -d indexer-db
-
-    echo -n "waiting for indexer db "
-    until ! [ -z "$(docker compose exec indexer-db mysqladmin ping --silent --host localhost -proot 2> /dev/null)" ]; do
-        sleep 1
-        echo -n "."
-    done
-    echo ""
-
-    docker compose up -d indexer data-provider
-
-    echo -n "waiting for data provider "
-    until docker compose exec data-provider nc -z localhost 3100 2>/dev/null; do
-        sleep 1
-        echo -n "."
-    done
-    echo ""
-
-    docker compose up -d
 }
 
-main() {
-    source <(grep -v '^#' "./.env" | sed -E 's|^(.+)=(.*)$|: ${\1=\2}; export \1|g')
-
-    CMD="$1"
-    shift
-
-    case "$CMD" in
-    up)
-        up
-        ;;
-    down)
-        down
-        ;;
-    *)
-        echo "command \"$CMD\" is not valid"
-        return 1
-        ;;
-    esac
-}
-
-main "$@"
+main
