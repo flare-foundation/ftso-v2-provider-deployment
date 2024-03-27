@@ -138,11 +138,11 @@ docker run --rm \
 
 Once the container is running, you can find the API spec at: http://localhost:3101/api-doc.
 
-Note: some users reported issues with getting the provider to start. For initial testing a "fixed" value provider can be used that simply returns a constant instead of reading data from exchanges. It can be started by setting an extra env variable `PRICE_PROVIDER_IMPL=fixed`:
+Note: some users reported issues with getting the provider to start. For initial testing a "fixed" value provider can be used that simply returns a constant instead of reading data from exchanges. It can be started by setting an extra env variable `VALUE_PROVIDER_IMPL=fixed`:
 ```bash
 docker run --rm \
   --env-file "mounts/scaling/.env" \
-  --env PRICE_PROVIDER_IMPL=fixed \
+  --env VALUE_PROVIDER_IMPL=fixed \
   --publish "0.0.0.0:3101:3101" \
   --network "ftso-v2-deployment_default" \
   "ftso-v2-deployment/ftso-scaling" \
