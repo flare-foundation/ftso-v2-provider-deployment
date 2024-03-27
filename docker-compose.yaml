@@ -8,33 +8,32 @@ services:
       - ./config/init.sql:/docker-entrypoint-initdb.d/db_init.sql
       - indexer_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "--silent", "--host", "localhost", "-proot"]
       timeout: 20s
       retries: 10
 
-
   indexer:
     container_name: ${COMPOSE_PROJECT_NAME}-indexer
-    image: ftso-v2-deployment/flare-system-c-indexer
+    image: ghcr.io/flare-foundation/flare-system-c-chain-indexer:latest
     volumes:
       - ./mounts/indexer/config.toml:/app/config.toml
     restart: unless-stopped
     depends_on:
-      indexer_db:
+      indexer-db:
         condition: service_healthy
 
   data-provider:
     container_name: ${COMPOSE_PROJECT_NAME}-data-provider
-    image: ftso-v2-deployment/ftso-scaling
+    image: ghcr.io/flare-foundation/ftso-scaling:latest
     env_file:
       - ./mounts/scaling/.env
-    command: "yarn start"
+    command: "node dist/apps/ftso-data-provider/apps/ftso-data-provider/src/main.js"
     depends_on:
       - indexer
 
   client:
     container_name: ${COMPOSE_PROJECT_NAME}-client
-    image: ftso-v2-deployment/flare-system-client
+    image: ghcr.io/flare-foundation/flare-system-client:latest
     volumes:
       - ./mounts/client/credentials/:/app/credentials/
       - ./mounts/client/config.toml:/app/config.toml

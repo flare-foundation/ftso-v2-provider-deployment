@@ -81,16 +81,16 @@ COSTON_RPC=rpctocoston
 CHAIN_CONFIG="coston"
 ENTITIES_FILE_PATH="<path to account keys JSON>"
 ```
-*Note 1: do not use .env.template, instead just create .env using above example or running tasks will error*
+**Note 1: do not use .env.template, instead just create .env using above example or running tasks will error**
 
-*Note 2: do not use public rpc because you will get rate limited during the task*
+**Note 2: do not use public rpc because you will get rate limited during the task**
 
 - Run task:
 ```
 yarn hardhat --network coston register-entities
 ```
 
-## Install dependencies
+## Install dependencies and setup .env
 
 You will need:
 - [jq](https://jqlang.github.io/jq/)
@@ -101,52 +101,43 @@ You will need:
     - (macOS only) `brew install gettext`
 - [docker](https://www.docker.com/)
 
-## Set up repos and docker images
-
+Setup `.env`:
 - Use `.env.example` to create `.env` file, eg.: using `cp .env.example .env`
-
 - Set private keys for required accounts in the `.env` file.
-
 - Set `NODE_RPC_URL` and `NODE_API_KEY` (optional) with your Coston node RPC endpoint in the `.env` file. 
+- Set PRICE_PROVIDER_URL to the endpoint of your price provider. Leave default if using example provided below
 
-- Use `./repos pull` to clone (first time) or pull (when cloned directories exist) projects. If you switch branches in .env file or you get errors while using `./repos pull` command, use `./repos clean` to delete files followed by `./repos pull` to clone them again. 
-
-- Use `./build.sh` to build docker images for all projects.
+Populate configs for provider stack by running `./populate_configs.sh`. **NOTE: You'll need to rerun this command if you change your `.env` file.**
 
 ## Start provider stack
-
-Using `./run up` 4 services will start:
-- `c-chain-indexer-db` - MySQL instance.
-- `c-chain-indexer` – **Indexer**.
-- `flare-system-client` **System Client**.
-- `ftso-scaling` - **Data Provider**.
-*Note: you can stop everything with `./run down`*
-
-There will also be config files generated for everything inside `./mounts` directory.
+Since docker-compose.yaml is provided you can start everything with `docker compose up -d`
+and stop everything with `docker compose down`. Database is persisted in a named docker volume.
+If you need to wipe database you need to remove the volume manually. When codebase is changed 
+new images need to be pulled with `docker compose pull`
 
 ## Feed value provider
 
 Start your own feed value provider or alternatively use example provider shipped with `ftso-scaling` project
 ```bash
-docker run --rm \
+docker run --rm -it \
   --env-file "mounts/scaling/.env" \
   --publish "0.0.0.0:3101:3101" \
   --network "ftso-v2-deployment_default" \
-  "ftso-v2-deployment/ftso-scaling" \
-  yarn start example_provider
+  ghcr.io/flare-foundation/ftso-scaling:latest \
+  node dist/apps/example_provider/apps/example_provider/src/main.js
 ```
 
 Once the container is running, you can find the API spec at: http://localhost:3101/api-doc.
 
 Note: some users reported issues with getting the provider to start. For initial testing a "fixed" value provider can be used that simply returns a constant instead of reading data from exchanges. It can be started by setting an extra env variable `VALUE_PROVIDER_IMPL=fixed`:
 ```bash
-docker run --rm \
+docker run --rm -it \
   --env-file "mounts/scaling/.env" \
   --env VALUE_PROVIDER_IMPL=fixed \
   --publish "0.0.0.0:3101:3101" \
   --network "ftso-v2-deployment_default" \
-  "ftso-v2-deployment/ftso-scaling" \
-  yarn start example_provider
+  ghcr.io/flare-foundation/ftso-scaling:latest \
+  node dist/apps/example_provider/apps/example_provider/src/main.js
 ```
 
 You should see the following in the logs:
