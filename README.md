@@ -105,7 +105,7 @@ Setup `.env`:
 - Use `.env.example` to create `.env` file, eg.: using `cp .env.example .env`
 - Set private keys for required accounts in the `.env` file.
 - Set `NODE_RPC_URL` and `NODE_API_KEY` (optional) with your Coston node RPC endpoint in the `.env` file. 
-- Set PRICE_PROVIDER_URL to the endpoint of your price provider. Leave default if using example provided below
+- Set VALUE_PROVIDER_URL to the endpoint of your feed value provider. Leave default if using example provider below
 
 Populate configs for provider stack by running `./populate_configs.sh`. **NOTE: You'll need to rerun this command if you change your `.env` file.**
 
