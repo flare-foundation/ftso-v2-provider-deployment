@@ -1,5 +1,5 @@
 [indexer]
-start_index = 13215000 # the number of the block that the indexer will start with
+start_index = 13330664 # the number of the block that the indexer will start with
 stop_index = 0 # the number of the block that the indexer will stop with; set 0 or skip to index indefinitely
 num_parallel_req = 100 # the number of threads doing requests to the chain in parallel
 batch_size = 1000 # the number of blocks that will be pushed to a database in a batch (should be divisible by num_parallel_req)
