@@ -41,7 +41,7 @@ Each data provider in the FTSOv2 system must set up and register the following 5
 
 Accounts need to be funded for gas fees. The delegation account is used of establishing voter power, which can be achieved by wrapping funds directly or by delegation from other accounts. Wrapping can be done via the [portal](https://governance.dev.aflabs.org/) (make sure to pick Coston, not Coston2).
 
-Account registration is handled by the `EntityManager` smart contract, which for Coston can be accessed [here](https://coston-explorer.flare.network/address/0x18AC71B309fd10Dbf245809C053a152D486F7117/write-contract#address-tabs).
+Account registration is handled by the `EntityManager` smart contract, which for Coston can be accessed [here](https://coston-explorer.flare.network/address/0x60A848E5Da796D741e559c170E851FC813061217/write-contract#address-tabs).
 
 The required contract invocation steps can be found in this [deployment task](https://github.com/flare-foundation/flare-smart-contracts-v2/blob/main/deployment/tasks/register-entities.ts#L33). You can check out the smart contract repo and run the task itself, or register accounts manually via the explorer UI link above. (It only needs to be done once).
 
@@ -111,7 +111,7 @@ Populate configs for provider stack by running `./populate_configs.sh`. **NOTE: 
 
 ## Start provider stack
 Since docker-compose.yaml is provided you can start everything with `docker compose up -d`
-and stop everything with `docker compose down`. Database is persisted in a named docker volume.
+and stop everything with `docker compose down`. Database is persisted in a named docker volume. 
 If you need to wipe database you need to remove the volume manually. When codebase is changed 
 new images need to be pulled with `docker compose pull`
 
