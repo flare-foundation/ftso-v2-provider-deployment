@@ -7,7 +7,7 @@ password = "root"
 log_queries = false  # Log db queries (for debugging)
 
 [logger]
-level = "DEBUG"      # valid values are: DEBUG, INFO, WARN, ERROR, DPANIC, PANIC, FATAL (as in zap logger)
+level = "INFO"      # valid values are: DEBUG, INFO, WARN, ERROR, DPANIC, PANIC, FATAL (as in zap logger)
 file = "./logs/flare-tlc.log"  # logger file
 max_file_size = 10  # max file size before rotating, in MB
 console = true      # also log to console
