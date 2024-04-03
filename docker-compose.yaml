@@ -38,7 +38,7 @@ services:
       - ./mounts/client/credentials/:/app/credentials/
       - ./mounts/client/config.toml:/app/config.toml
     environment:
-      SYSTEM_CLIENT_SENDER_PRIVATE_KEY: ${IDENTITY_PK}
+      SYSTEM_CLIENT_SENDER_PRIVATE_KEY: ${SIGNING_PK}
       SIGNING_POLICY_PRIVATE_KEY: ${SIGNING_PK}
       PROTOCOL_MANAGER_SUBMIT_PRIVATE_KEY: ${SUBMIT_PK}
       PROTOCOL_MANAGER_SUBMIT_SIGNATURES_PRIVATE_KEY: ${SIGNATURES_PK}
