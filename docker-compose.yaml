@@ -33,7 +33,7 @@ services:
 
   client:
     container_name: ${COMPOSE_PROJECT_NAME}-client
-    image: ghcr.io/flare-foundation/flare-system-client:latest
+    image: ghcr.io/flare-foundation/flare-system-client:latest@sha256:4d3ecd1c667db34caa64c0b4ccd2cdcb7c74fe6f14ed865e314c9c790cc79d42
     volumes:
       - ./mounts/client/credentials/:/app/credentials/
       - ./mounts/client/config.toml:/app/config.toml
