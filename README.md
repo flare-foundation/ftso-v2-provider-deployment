@@ -73,7 +73,7 @@ Instructions for the Hardhat deployment task:
     "delegation": {
       "address": "0x95288e962ff1893ef6c32ad4143fffb12e1eb15f",
       "privateKey": "<private key hex>"
-    },
+    }
   }
 ]
 ```
@@ -109,7 +109,7 @@ Setup `.env`:
 - Set `NODE_RPC_URL` and `NODE_API_KEY` (optional) with your Coston node RPC endpoint in the `.env` file. 
 - Set `VALUE_PROVIDER_URL` to the endpoint of your feed value provider. Leave default if using example provider below
 
-Populate configs for provider stack by running `./populate_configs.sh`. **NOTE: You'll need to rerun this command if you change your `.env` file.**
+Populate configs for provider stack by running `./populate_config.sh`. **NOTE: You'll need to rerun this command if you change your `.env` file.**
 
 ## Start provider stack
 Since docker-compose.yaml is provided you can start everything with `docker compose up -d`
