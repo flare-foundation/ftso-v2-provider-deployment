@@ -1,10 +1,11 @@
 [indexer]
-start_index = 13330664 # the number of the block that the indexer will start with
+start_index = 13930000 # the number of the block that the indexer will start with
 stop_index = 0 # the number of the block that the indexer will stop with; set 0 or skip to index indefinitely
-num_parallel_req = 100 # the number of threads doing requests to the chain in parallel
-batch_size = 1000 # the number of blocks that will be pushed to a database in a batch (should be divisible by num_parallel_req)
-log_range = 10 # the size of the interval of blocks used to request logs in each request; suggested value is log_range = batch_size / num_parallel_req; note that a blockchain node might have an upper bound on this
-new_block_check_millis = 1000 # interval for checking for new blocks
+num_parallel_req = 50 # 10 the number of threads doing requests to the chain in parallel
+batch_size = 4000 # 5000 the number of blocks that will be pushed to a database in a batch (should be divisible by num_parallel_req)
+log_range = 80 # 500 the size of the interval of blocks used to request logs in each request; suggested value is log_range = batch_size / num_parallel_req; note that a blockchain node might have an upper bound on this
+new_block_check_millis = 1000 # 1000 #timeout_milis = 20000 #interval for checking for new blocks
+timeout_milis = 10000
 
 [[indexer.collect_transactions]]
 contract_address = "$SUBMISSION" # Submission

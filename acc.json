@@ -1,0 +1,24 @@
+[
+  {
+    "identity": {
+      "address": "0xa6533eCA0958E92E1c04fa3f906A8D4f7653c26b",
+      "privateKey": "0xc21fdbc2be20d7744e692ae5a3324d0f911b50db051b1269762fe81ce9739df0"
+    },
+    "submit": {
+      "address": "0xc9964192e6F07d7c65532F1A35f00088fBbF10AD",
+      "privateKey": "0xc21fdbc2be20d7744e692ae5a3324d0f911b50db051b1269762fe81ce9739df0"
+    },
+    "submitSignatures": {
+      "address": "0xaf33f75A2d84D64ee7901FDE719f78287EF8Ec34",
+      "privateKey": "0xc21fdbc2be20d7744e692ae5a3324d0f911b50db051b1269762fe81ce9739df0"
+    },
+    "signingPolicy": {
+      "address": "0xEF50d0d12C97cf26466E26f4553E157efa3282c9",
+      "privateKey": "0xc21fdbc2be20d7744e692ae5a3324d0f911b50db051b1269762fe81ce9739df0"
+    },
+    "delegation": {
+      "address": "0x7d255762b5086C0BE053B624de62063C6B195084",
+      "privateKey": "0xc21fdbc2be20d7744e692ae5a3324d0f911b50db051b1269762fe81ce9739df0"
+    }
+  }
+]

@@ -38,14 +38,16 @@ enabled_finalizer = true
 
 [protocol.ftso1]
 id = 100
-api_endpoint = "http://data-provider:3100/"
+api_endpoint = "http://192.168.0.3:3100/"
 x_api_key = "abcdef"
 
 [submit1]
+enabled = true
 start_offset = "75s"   # start fetching data and submitting txs after this offset from the start of the epoch
 tx_submit_retries = 1  # number of retries for submitting txs
 
 [submit2]
+enabled = true
 start_offset = "5s"
 tx_submit_retries = 1
 
