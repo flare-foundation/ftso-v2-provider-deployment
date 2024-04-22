@@ -50,6 +50,9 @@ main() {
     export FLARE_SYSTEMS_CALCULATOR=$(get_address_by_name "FlareSystemsCalculator")
     export FTSO_REWARD_OFFERS_MANAGER=$(get_address_by_name "FtsoRewardOffersManager")
     export REWARD_MANAGER=$(get_address_by_name "RewardManager")
+    export FAST_UPDATER=$(get_address_by_name "FastUpdater")
+    export FAST_UPDATES_CONFIGURATION=$(get_address_by_name "FastUpdatesConfiguration")
+    export FAST_UPDATE_INCENTIVE_MANAGER=$(get_address_by_name "FastUpdateIncentiveManager")
 
     # read config parameters
     export FIRST_VOTING_EPOCH_START_SEC=$(jq -r .firstVotingRoundStartTs "$CHAIN_CONFIG")
@@ -84,7 +87,12 @@ main() {
     # scaling
     mkdir -p "mounts/scaling"
     CONFIG_FILE="mounts/scaling/.env"
-    envsubst < template-configs/scaling.env > "$CONFIG_FILE"
+    envsubst < "template-configs/scaling.env" > "$CONFIG_FILE"
+    
+    # fast updates
+    mkdir -p "mounts/fast-updates"
+    CONFIG_FILE="mounts/fast-updates/config.toml"
+    envsubst < "template-configs/fast-updates.template.toml" > "$CONFIG_FILE"
 }
 
 main
