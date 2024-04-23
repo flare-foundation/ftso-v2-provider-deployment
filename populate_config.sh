@@ -2,11 +2,14 @@
 
 set -eu
 
-ROOT_DIR="$(pwd)"
+source <(grep -v '^#' "./.env" | sed -E 's|^(.+)=(.*)$|: ${\1=\2}; export \1|g')
 
-CHAIN_CONFIG="${ROOT_DIR}/config/config.coston.json"
-DEPLOYED_CONTRACTS="${ROOT_DIR}/config/contracts.coston.json"
-INITIAL_REWARD_EPOCH="${ROOT_DIR}/config/initial_reward_epoch.coston.txt"
+ROOT_DIR="$(pwd)"
+CONFIG_DIR="${ROOT_DIR}/config/${NETWORK}"
+
+CHAIN_CONFIG="${CONFIG_DIR}/config.json"
+DEPLOYED_CONTRACTS="${CONFIG_DIR}/contracts.json"
+INITIAL_REWARD_EPOCH="${CONFIG_DIR}/initial_reward_epoch.txt"
 
 get_address_by_name() {
     name="$1"
@@ -14,7 +17,6 @@ get_address_by_name() {
 }
 
 main() {
-    source <(grep -v '^#' "./.env" | sed -E 's|^(.+)=(.*)$|: ${\1=\2}; export \1|g')
 
     if [ -d "mounts" ] || [ -f "mounts" ]; then
         echo "cleaning configs from previous runs:"
