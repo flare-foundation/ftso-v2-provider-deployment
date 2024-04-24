@@ -8,8 +8,9 @@ A data provider system for FTSOv2 consists of the following components:
 2. **Data Provider**. Provides commit, reveal, and median result data to System Client for submission.
 3. **Feed Value Provider**. Provides current values (prices) for a given set of feeds.
 4. **Indexer**. Monitors the blockchain and records all FTSOv2 related transactions and events.
+5. **Fast Updates client**. Responsible for interaction with Fast Updates contracts, including data collection and submission and other system tasks.
 
-Reference implementations are provided for **Indexer**, **Flare System Client**, **Data Provider**, and providers are expected to plug in their own **Feed Value Provider** implementing a specific REST API (there is an sample implementation for testing).
+Reference implementations are provided for **Indexer**, **Flare System Client**, **Data Provider**, **Fast Updats Client**, and providers are expected to plug in their own **Feed Value Provider** implementing a specific REST API (there is an sample implementation for testing).
 
 ## Operation
 
@@ -47,6 +48,11 @@ Account registration is handled by the `EntityManager` smart contract, which for
 
 The required contract invocation steps can be found in this [deployment task](https://github.com/flare-foundation/flare-smart-contracts-v2/blob/main/deployment/tasks/register-entities.ts#L33). You can check out the smart contract repo and run the task itself, or register accounts manually via the explorer UI link above. (It only needs to be done once).
 
+Additionally sortition key has to be generated for Fast Updates. You can read more [here](https://github.com/flare-foundation/fast-updates/tree/main/go-client). You can generate it using:
+```
+docker run --rm ghcr.io/flare-foundation/fast-updates/go-client:latest keygen
+```
+
 Instructions for the Hardhat deployment task:
 - Check out repo: https://github.com/flare-foundation/flare-smart-contracts-v2/
 - Build repo: `yarn` then `yarn c`
@@ -74,6 +80,7 @@ Instructions for the Hardhat deployment task:
       "address": "0x95288e962ff1893ef6c32ad4143fffb12e1eb15f",
       "privateKey": "<private key hex>"
     }
+    "sortitionPrivateKey": "<private key hex>"
   }
 ]
 ```
@@ -87,9 +94,10 @@ ENTITIES_FILE_PATH="<path to account keys JSON>"
 
 **Note 2: do not use public rpc because you will get rate limited during the task**
 
-- Run task:
+- Run tasks:
 ```
 yarn hardhat --network coston register-entities
+yarn hardhat --network coston register-public-keys
 ```
 
 ## Install dependencies and setup .env
