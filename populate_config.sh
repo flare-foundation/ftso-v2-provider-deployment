@@ -10,6 +10,7 @@ CONFIG_DIR="${ROOT_DIR}/config/${NETWORK}"
 CHAIN_CONFIG="${CONFIG_DIR}/config.json"
 DEPLOYED_CONTRACTS="${CONFIG_DIR}/contracts.json"
 INITIAL_REWARD_EPOCH="${CONFIG_DIR}/initial_reward_epoch.txt"
+CHAIN_ID_FILE="${CONFIG_DIR}/chain_id.txt"
 
 get_address_by_name() {
     name="$1"
@@ -56,6 +57,9 @@ main() {
     export FIRST_REWARD_EPOCH_START_VOTING_ID=$(jq -r .firstRewardEpochStartVotingRoundId "$CHAIN_CONFIG")
     export REWARD_EPOCH_DURATION_IN_VOTING_EPOCHS=$(jq -r .rewardEpochDurationInVotingEpochs "$CHAIN_CONFIG")
     export INITIAL_REWARD_EPOCH_ID=$(cat "$INITIAL_REWARD_EPOCH")
+
+    # chain id
+    export CHAIN_ID=$(cat "$CHAIN_ID_FILE")
 
     # write configs
 
