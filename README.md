@@ -101,7 +101,7 @@ CHAIN_CONFIG="songbird"
 yarn hardhat --network coston register-entities
 
 # if songbird
-yarn hardhat --network coston register-entities
+yarn hardhat --network songbird register-entities
 ```
 
 ## Install dependencies and setup .env
