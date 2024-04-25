@@ -39,11 +39,13 @@ Each data provider in the FTSOv2 system must set up and register the following 5
 - `SigningPolicy`. Used for signature generation during the voting round, and reward epoch signing policy signing (it's a system protocol ran once during reward epoch to establish reward epoch settings, including valid voters and their weights).
 - `Delegation`. Account to which community should delegate funds (using WNat contract) to increase the vote power of the voter (identity/entity) - and also to later get the rewards. If not set, the identity account will be used.
 
-Accounts need to be funded for gas fees. The delegation account is used of establishing voter power, which can be achieved by wrapping funds directly or by delegation from other accounts. Wrapping can be done via the [portal](https://governance.dev.aflabs.org/) (make sure to pick Coston, not Coston2). 
+Accounts need to be funded for gas fees. The delegation account is used of establishing voter power, which can be achieved by wrapping funds directly or by delegation from other accounts. Wrapping can be done via the [development portal](https://governance.dev.aflabs.org/) (make sure to pick Coston, not Coston2) for testnets and via [portal](https://portal.flare.network) for mainnets. 
 
 Important: protocol operation uses normalized weights, and the delegation account should have <span style="color:red">at least 150 WCFLR</span> to obtain a non-0 vote power.
 
-Account registration is handled by the `EntityManager` smart contract, which for Coston can be accessed [here](https://coston-explorer.flare.network/address/0x60A848E5Da796D741e559c170E851FC813061217/write-contract#address-tabs).
+Account registration is handled by the `EntityManager` smart contract, which can be accessed:
+- for [Coston](https://coston-explorer.flare.network/address/0x60A848E5Da796D741e559c170E851FC813061217/write-contract#address-tabs).
+- for [Songbird](https://songbird-explorer.flare.network/address/0x46C417D0760198E94fee455CE0e223262a3D0049/write-contract#address-tabs).
 
 The required contract invocation steps can be found in this [deployment task](https://github.com/flare-foundation/flare-smart-contracts-v2/blob/main/deployment/tasks/register-entities.ts#L33). You can check out the smart contract repo and run the task itself, or register accounts manually via the explorer UI link above. (It only needs to be done once).
 
@@ -79,9 +81,15 @@ Instructions for the Hardhat deployment task:
 ```
 - Set the following env vars in `.env`:
 ```
+ENTITIES_FILE_PATH="<path to account keys JSON>"
+
+# if coston
 COSTON_RPC=rpctocoston
 CHAIN_CONFIG="coston"
-ENTITIES_FILE_PATH="<path to account keys JSON>"
+
+# if songbird
+SONGBIRD_RPC=rpctosongbird
+CHAIN_CONFIG="songbird"
 ```
 **Note 1: do not use .env.template, instead just create .env using above example or running tasks will error**
 
@@ -89,6 +97,10 @@ ENTITIES_FILE_PATH="<path to account keys JSON>"
 
 - Run task:
 ```
+# if coston
+yarn hardhat --network coston register-entities
+
+# if songbird
 yarn hardhat --network coston register-entities
 ```
 
@@ -106,7 +118,7 @@ You will need:
 Setup `.env`:
 - Use `.env.example` to create `.env` file, eg.: using `cp .env.example .env`
 - Set private keys for required accounts in the `.env` file.
-- Set `NODE_RPC_URL` and `NODE_API_KEY` (optional) with your Coston node RPC endpoint in the `.env` file. 
+- Set `NODE_RPC_URL` and `NODE_API_KEY` (optional) with your Coston or Songbird node RPC endpoint in the `.env` file. 
 - Set `VALUE_PROVIDER_URL` to the endpoint of your feed value provider. Leave default if using example provider below
 
 Populate configs for provider stack by running `./populate_config.sh`. **NOTE: You'll need to rerun this command if you change your `.env` file.**
