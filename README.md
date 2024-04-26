@@ -185,3 +185,12 @@ Here are log samples indicating successful operation (`flare-system-client`):
 [03-04|06:59:21.564]	DEBUG	chain/tx_utils.go:134	Tx mined, getting receipt 0xb371cae856bf1f37f52f9db556a346d0de35e2b02b73f87ec2dad63f044d7e8a
 [03-04|06:59:21.604]	DEBUG	chain/tx_utils.go:139	Receipt status: 1
 ```
+
+Here are log samples indicating successful operation (`fast-updates`):
+
+**Note: depending on your weight it may take some time until you are selected for the fast-updates**
+```
+ftso-v2-deployment-fast-updates  | [04-25|09:00:32.456] INFO    provider/feed_provider.go:65    deltas: +++++++++++++++++++++-++++0+
+ftso-v2-deployment-fast-updates  | [04-25|09:00:32.456] INFO    client/client_requests.go:205   submitting update for block 14266248 replicate 0: +++++++++++++++++++++-++++0+
+ftso-v2-deployment-fast-updates  | [04-25|09:00:33.496] INFO    client/client_requests.go:239   successful update for block 14266248 replicate 0 in block 14266250
+```
