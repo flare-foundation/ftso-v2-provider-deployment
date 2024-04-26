@@ -8,7 +8,7 @@ A data provider system for FTSOv2 consists of the following components:
 2. **Data Provider**. Provides commit, reveal, and median result data to System Client for submission.
 3. **Feed Value Provider**. Provides current values (prices) for a given set of feeds.
 4. **Indexer**. Monitors the blockchain and records all FTSOv2 related transactions and events.
-5. **Fast Updates client**. Responsible for interaction with Fast Updates contracts, including data collection and submission and other system tasks.
+5. **Fast Updates Client**. Responsible for interaction with Fast Updates contracts, including data collection and submission and other system tasks.
 
 Reference implementations are provided for **Indexer**, **Flare System Client**, **Data Provider**, **Fast Updats Client**, and providers are expected to plug in their own **Feed Value Provider** implementing a specific REST API (there is an sample implementation for testing).
 
