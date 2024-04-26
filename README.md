@@ -48,10 +48,12 @@ Account registration is handled by the `EntityManager` smart contract, which for
 
 The required contract invocation steps can be found in this [deployment task](https://github.com/flare-foundation/flare-smart-contracts-v2/blob/main/deployment/tasks/register-entities.ts#L33). You can check out the smart contract repo and run the task itself, or register accounts manually via the explorer UI link above. (It only needs to be done once).
 
-Additionally sortition key has to be generated for Fast Updates. You can read more [here](https://github.com/flare-foundation/fast-updates/tree/main/go-client). You can generate it using:
+Additionally for fast updates:
+- Sortition key has to be generated (you can read more [here](https://github.com/flare-foundation/fast-updates/tree/main/go-client)). You can generate it using:
 ```
 docker run --rm ghcr.io/flare-foundation/fast-updates/go-client:latest keygen
 ```
+- Accounts for submission need to be generated and funded for gas prices. These can be any accounts not used for the 5 accounts above and don't need to be regsitered with the system in any way. We suggest using three to avoid nonce conflicts. You will need to pass their private keys in the `.env` file separated by commas.
 
 Instructions for the Hardhat deployment task:
 - Check out repo: https://github.com/flare-foundation/flare-smart-contracts-v2/
@@ -116,6 +118,8 @@ Setup `.env`:
 - Set private keys for required accounts in the `.env` file.
 - Set `NODE_RPC_URL` and `NODE_API_KEY` (optional) with your Coston node RPC endpoint in the `.env` file. 
 - Set `VALUE_PROVIDER_URL` to the endpoint of your feed value provider. Leave default if using example provider below
+- Set `FAST_UPDATES_ACCOUNTS` to private keys of fast updates submission accounts separated by commas
+- Set `FAST_UPDATES_SORTITION_PRIVATE_KEY` to the key that was registered with the network
 
 Populate configs for provider stack by running `./populate_config.sh`. **NOTE: You'll need to rerun this command if you change your `.env` file.**
 
