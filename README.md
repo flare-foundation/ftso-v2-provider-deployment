@@ -131,14 +131,12 @@ new images need to be pulled with `docker compose pull`
 
 ## Feed value provider
 
-Start your own feed value provider or alternatively use example provider shipped with `ftso-scaling` project
+Start your own feed value provider or alternatively use example provider:
 ```bash
 docker run --rm -it \
-  --env-file "mounts/scaling/.env" \
   --publish "0.0.0.0:3101:3101" \
   --network "ftso-v2-deployment_default" \
-  ghcr.io/flare-foundation/ftso-scaling:latest \
-  node dist/apps/example_provider/apps/example_provider/src/main.js
+  ghcr.io/flare-foundation/ftso-v2-example-value-provider
 ```
 
 Once the container is running, you can find the API spec at: http://localhost:3101/api-doc.
@@ -146,12 +144,10 @@ Once the container is running, you can find the API spec at: http://localhost:31
 Note: some users reported issues with getting the provider to start. For initial testing a "fixed" value provider can be used that simply returns a constant instead of reading data from exchanges. It can be started by setting an extra env variable `VALUE_PROVIDER_IMPL=fixed`:
 ```bash
 docker run --rm -it \
-  --env-file "mounts/scaling/.env" \
   --env VALUE_PROVIDER_IMPL=fixed \
   --publish "0.0.0.0:3101:3101" \
   --network "ftso-v2-deployment_default" \
-  ghcr.io/flare-foundation/ftso-scaling:latest \
-  node dist/apps/example_provider/apps/example_provider/src/main.js
+  ghcr.io/flare-foundation/ftso-v2-example-value-provider
 ```
 
 You should see the following in the logs:
