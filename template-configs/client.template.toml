@@ -57,7 +57,6 @@ max_rounds = 3          # max number of rounds to fetch data and submit signatur
 
 [finalizer]
 starting_reward_epoch = 0
-start_offset = "6h"
 grace_period_end_offset = "65s"
 
 [gas_submit]
