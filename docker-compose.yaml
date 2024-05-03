@@ -33,7 +33,7 @@ services:
 
   client:
     container_name: ${COMPOSE_PROJECT_NAME}-client
-    image: ghcr.io/flare-foundation/flare-system-client:latest@sha256:4d3ecd1c667db34caa64c0b4ccd2cdcb7c74fe6f14ed865e314c9c790cc79d42
+    image: ghcr.io/flare-foundation/flare-system-client:latest
     volumes:
       - ./mounts/client/config.toml:/app/config.toml
     environment:
@@ -41,6 +41,7 @@ services:
       SIGNING_POLICY_PRIVATE_KEY: ${SIGNING_PK}
       PROTOCOL_MANAGER_SUBMIT_PRIVATE_KEY: ${SUBMIT_PK}
       PROTOCOL_MANAGER_SUBMIT_SIGNATURES_PRIVATE_KEY: ${SIGNATURES_PK}
+      PROTOCOL_X_API_KEY_100: "abcdef"
     depends_on:
       - indexer
 
