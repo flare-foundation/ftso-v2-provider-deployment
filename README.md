@@ -112,6 +112,7 @@ You will need:
 - [envsubst](https://www.gnu.org/software/gettext/manual/html_node/envsubst-Invocation.html)
     - (macOS only) `brew install gettext`
 - [docker](https://www.docker.com/)
+- [bash] (macOs only for updated version) `brew install bash`
 
 Setup `.env`:
 - Use `.env.example` to create `.env` file, eg.: using `cp .env.example .env`
