@@ -50,7 +50,7 @@ services:
     volumes:
       - ./mounts/fast-updates/config.toml:/app/config.toml
     environment:
-      PRIVATE_KEY: ${SIGNING_PK}
+      SIGNING_PRIVATE_KEY: ${SIGNING_PK}
       ACCOUNTS: ${FAST_UPDATES_ACCOUNTS}
       SORTITION_PRIVATE_KEY: ${FAST_UPDATES_SORTITION_PRIVATE_KEY}
     depends_on:
