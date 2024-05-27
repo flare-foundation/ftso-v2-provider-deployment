@@ -1,5 +1,6 @@
 services:
   indexer-db:
+    profiles: [scaling]
     container_name: ${COMPOSE_PROJECT_NAME}-indexer-db
     image: "mysql"
     environment:
@@ -13,6 +14,7 @@ services:
       retries: 10
 
   indexer:
+    profiles: [scaling]
     container_name: ${COMPOSE_PROJECT_NAME}-indexer
     image: ghcr.io/flare-foundation/flare-system-c-chain-indexer:latest
     volumes:
@@ -23,6 +25,7 @@ services:
         condition: service_healthy
 
   data-provider:
+    profiles: [scaling]
     container_name: ${COMPOSE_PROJECT_NAME}-data-provider
     image: ghcr.io/flare-foundation/ftso-scaling:latest
     env_file:
@@ -32,6 +35,7 @@ services:
       - indexer
 
   client:
+    profiles: [scaling]
     container_name: ${COMPOSE_PROJECT_NAME}-client
     image: ghcr.io/flare-foundation/flare-system-client:latest
     volumes:
