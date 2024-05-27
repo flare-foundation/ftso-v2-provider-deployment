@@ -39,7 +39,7 @@ Each data provider in the FTSOv2 system must set up and register the following 5
 - `SigningPolicy`. Used for signature generation during the voting round, and reward epoch signing policy signing (it's a system protocol ran once during reward epoch to establish reward epoch settings, including valid voters and their weights).
 - `Delegation`. Account to which community should delegate funds (using WNat contract) to increase the vote power of the voter (identity/entity) - and also to later get the rewards. If not set, the identity account will be used.
 
-Accounts need to be funded for gas fees. The delegation account is used of establishing voter power, which can be achieved by wrapping funds directly or by delegation from other accounts. Wrapping can be done via the [development portal](https://governance.dev.aflabs.org/) (make sure to pick Coston, not Coston2) for testnets and via [portal](https://portal.flare.network) for mainnets. 
+Accounts need to be funded for gas fees. The delegation account is used of establishing voter power, which can be achieved by wrapping funds directly or by delegation from other accounts. Wrapping can be done via the [development portal](https://governance.dev.aflabs.org/) (make sure to pick the correct network for testnets and via [portal](https://portal.flare.network) for mainnets. 
 
 Important: protocol operation uses normalized weights, and the delegation account should have <span style="color:red">at least 150 WCFLR</span> to obtain a non-0 vote power.
 
@@ -90,6 +90,10 @@ CHAIN_CONFIG="coston"
 # if songbird
 SONGBIRD_RPC=rpctosongbird
 CHAIN_CONFIG="songbird"
+
+# if coston2
+COSTON2_RPC=rpctocoston2
+CHAIN_CONFIG="coston2"
 ```
 **Note 1: do not use .env.template, instead just create .env using above example or running tasks will error**
 
@@ -102,6 +106,9 @@ yarn hardhat --network coston register-entities
 
 # if songbird
 yarn hardhat --network songbird register-entities
+
+# if coston2
+yarn hardhat --network coston2 register-entities
 ```
 
 ## Install dependencies and setup .env
