@@ -51,6 +51,14 @@ topic = "undefined"
 contract_address = "$FTSO_REWARD_OFFERS_MANAGER" # FtsoRewardOffersManager
 topic = "undefined"
 
+[[indexer.collect_logs]]
+contract_address = "$FAST_UPDATER" # FastUpdater
+topic = "undefined"
+
+[[indexer.collect_logs]]
+contract_address = "$FAST_UPDATE_INCENTIVE_MANAGER" # FastUpdateIncentiveManager
+topic = "undefined"
+
 [db]
 host = "indexer-db"
 port = 3306

@@ -68,5 +68,20 @@
     "name": "FtsoFeedIdConverter",
     "contractName": "FtsoFeedIdConverter.sol",
     "address": "0x5c871668b17B604c0CAA848D8Efa7D9094748BC8"
+  },
+  {
+    "name": "FastUpdateIncentiveManager",
+    "contractName": "FastUpdateIncentiveManager.sol",
+    "address": "0xc1a22A1d295e829Caf3be61bd1E11E5eEd7f0F15"
+  },
+  {
+    "name": "FastUpdater",
+    "contractName": "FastUpdater.sol",
+    "address": "0x9B931f5d3e24fc8C9064DB35bDc8FB4bE0E862f9"
+  },
+  {
+    "name": "FastUpdatesConfiguration",
+    "contractName": "FastUpdatesConfiguration.sol",
+    "address": "0x9A53e14B58383642cdB2bb4D5C46989F05C6B5f9"
   }
 ]

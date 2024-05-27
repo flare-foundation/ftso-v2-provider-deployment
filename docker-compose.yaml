@@ -49,5 +49,18 @@ services:
     depends_on:
       - indexer
 
+  fast-updates:
+    profiles: [fast-updates]
+    container_name: ${COMPOSE_PROJECT_NAME}-fast-updates
+    image: ghcr.io/flare-foundation/fast-updates/go-client:latest
+    volumes:
+      - ./mounts/fast-updates/config.toml:/app/config.toml
+    environment:
+      SIGNING_PRIVATE_KEY: ${SIGNING_PK}
+      ACCOUNTS: ${FAST_UPDATES_ACCOUNTS}
+      SORTITION_PRIVATE_KEY: ${FAST_UPDATES_SORTITION_PRIVATE_KEY}
+    depends_on:
+      - indexer
+
 volumes:
   indexer_data:

@@ -1,0 +1,24 @@
+[client]
+fast_updater_address = "${FAST_UPDATER}"
+submission_address = "${SUBMISSION}"
+flare_system_manager = "${FLARE_SYSTEMS_MANAGER}"
+incentive_manager_address = "${FAST_UPDATE_INCENTIVE_MANAGER}"
+fast_updates_configuration_address = "${FAST_UPDATES_CONFIGURATION}"
+submission_window = 10
+advance_blocks = 0
+max_weight = 512
+value_provider_base_url = "${VALUE_PROVIDER_URL}"
+
+[transactions]
+gas_limit = 8000000
+value = 0
+gas_price_multiplier = 1.2
+
+[logger]
+level = "INFO"
+file = "./logger/logs/fast_updates_client.log"
+console = true
+
+[chain]
+node_url = "${NODE_RPC_URL}"
+chain_id = ${CHAIN_ID}

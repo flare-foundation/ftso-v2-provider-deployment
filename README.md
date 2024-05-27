@@ -8,8 +8,9 @@ A data provider system for FTSOv2 consists of the following components:
 2. **Data Provider**. Provides commit, reveal, and median result data to System Client for submission.
 3. **Feed Value Provider**. Provides current values (prices) for a given set of feeds.
 4. **Indexer**. Monitors the blockchain and records all FTSOv2 related transactions and events.
+5. **Fast Updates Client**. Responsible for interaction with Fast Updates contracts, including data collection and submission and other system tasks.
 
-Reference implementations are provided for **Indexer**, **Flare System Client**, **Data Provider**, and providers are expected to plug in their own **Feed Value Provider** implementing a specific REST API (there is an sample implementation for testing).
+Reference implementations are provided for **Indexer**, **Flare System Client**, **Data Provider**, **Fast Updats Client**, and providers are expected to plug in their own **Feed Value Provider** implementing a specific REST API (there is an sample implementation for testing).
 
 ## Operation
 
@@ -49,6 +50,13 @@ Account registration is handled by the `EntityManager` smart contract, which can
 
 The required contract invocation steps can be found in this [deployment task](https://github.com/flare-foundation/flare-smart-contracts-v2/blob/main/deployment/tasks/register-entities.ts#L33). You can check out the smart contract repo and run the task itself, or register accounts manually via the explorer UI link above. (It only needs to be done once).
 
+Additionally for fast updates:
+- Sortition key has to be generated (you can read more [here](https://github.com/flare-foundation/fast-updates/tree/main/go-client)). You can generate it using:
+```
+docker run --rm ghcr.io/flare-foundation/fast-updates/go-client:latest keygen
+```
+- Accounts for submission need to be generated and funded for gas prices. These can be any accounts not used for the 5 accounts above and don't need to be regsitered with the system in any way. We suggest using three to avoid nonce conflicts. You will need to pass their private keys in the `.env` file separated by commas.
+
 Instructions for the Hardhat deployment task:
 - Check out repo: https://github.com/flare-foundation/flare-smart-contracts-v2/
 - Build repo: `yarn` then `yarn c`
@@ -76,6 +84,7 @@ Instructions for the Hardhat deployment task:
       "address": "0x95288e962ff1893ef6c32ad4143fffb12e1eb15f",
       "privateKey": "<private key hex>"
     }
+    "sortitionPrivateKey": "<private key hex>"
   }
 ]
 ```
@@ -99,10 +108,11 @@ CHAIN_CONFIG="coston2"
 
 **Note 2: do not use public rpc because you will get rate limited during the task**
 
-- Run task:
+- Run tasks:
 ```
 # if coston
 yarn hardhat --network coston register-entities
+yarn hardhat --network coston register-public-keys
 
 # if songbird
 yarn hardhat --network songbird register-entities
@@ -121,12 +131,15 @@ You will need:
 - [envsubst](https://www.gnu.org/software/gettext/manual/html_node/envsubst-Invocation.html)
     - (macOS only) `brew install gettext`
 - [docker](https://www.docker.com/)
+- [bash] (macOs only for updated version) `brew install bash`
 
 Setup `.env`:
 - Use `.env.example` to create `.env` file, eg.: using `cp .env.example .env`
 - Set private keys for required accounts in the `.env` file.
 - Set `NODE_RPC_URL` and `NODE_API_KEY` (optional) with your Coston or Songbird node RPC endpoint in the `.env` file. 
 - Set `VALUE_PROVIDER_URL` to the endpoint of your feed value provider. Leave default if using example provider below
+- Set `FAST_UPDATES_ACCOUNTS` to private keys of fast updates submission accounts separated by commas
+- Set `FAST_UPDATES_SORTITION_PRIVATE_KEY` to the key that was registered with the network
 
 Populate configs for provider stack by running `./populate_config.sh`. **NOTE: You'll need to rerun this command if you change your `.env` file.**
 
@@ -191,4 +204,13 @@ Here are log samples indicating successful operation (`flare-system-client`):
 [03-04|06:59:20.532]	DEBUG	chain/tx_utils.go:128	Waiting for tx to be mined...
 [03-04|06:59:21.564]	DEBUG	chain/tx_utils.go:134	Tx mined, getting receipt 0xb371cae856bf1f37f52f9db556a346d0de35e2b02b73f87ec2dad63f044d7e8a
 [03-04|06:59:21.604]	DEBUG	chain/tx_utils.go:139	Receipt status: 1
+```
+
+Here are log samples indicating successful operation (`fast-updates`):
+
+**Note: depending on your weight it may take some time until you are selected for the fast-updates**
+```
+ftso-v2-deployment-fast-updates  | [04-25|09:00:32.456] INFO    provider/feed_provider.go:65    deltas: +++++++++++++++++++++-++++0+
+ftso-v2-deployment-fast-updates  | [04-25|09:00:32.456] INFO    client/client_requests.go:205   submitting update for block 14266248 replicate 0: +++++++++++++++++++++-++++0+
+ftso-v2-deployment-fast-updates  | [04-25|09:00:33.496] INFO    client/client_requests.go:239   successful update for block 14266248 replicate 0 in block 14266250
 ```
