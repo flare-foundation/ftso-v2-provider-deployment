@@ -40,6 +40,10 @@ contract_address = "$VOTER_REGISTRY" # VoterRegistry
 topic = "undefined"
 
 [[indexer.collect_logs]]
+contract_address = "0x16EdaECC2D3713C3A94CCd1FFCd2589cfb7Ee9e0" # (Temporary) Old VoterRegistry for Songbird
+topic = "undefined"
+
+[[indexer.collect_logs]]
 contract_address = "$FLARE_SYSTEMS_CALCULATOR" # FlareSystemsCalculator
 topic = "undefined"
 
