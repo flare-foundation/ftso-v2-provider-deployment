@@ -40,7 +40,7 @@ contract_address = "$VOTER_REGISTRY" # VoterRegistry
 topic = "undefined"
 
 [[indexer.collect_logs]]
-contract_address = "0x16EdaECC2D3713C3A94CCd1FFCd2589cfb7Ee9e0" # (Temporary) Old VoterRegistry for Songbird
+contract_address = "0x16EdaECC2D3713C3A94CCd1FFCd2589cfb7Ee9e0" # Songbird: Old VoterRegistry
 topic = "undefined"
 
 [[indexer.collect_logs]]
@@ -61,6 +61,10 @@ topic = "undefined"
 
 [[indexer.collect_logs]]
 contract_address = "$FAST_UPDATE_INCENTIVE_MANAGER" # FastUpdateIncentiveManager
+topic = "undefined"
+
+[[indexer.collect_logs]]
+contract_address = "0xc1a22A1d295e829Caf3be61bd1E11E5eEd7f0F15" # Coston: Old FastUpdateIncentiveManager
 topic = "undefined"
 
 [db]
