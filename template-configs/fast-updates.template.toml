@@ -7,7 +7,7 @@ fast_updates_configuration_address = "${FAST_UPDATES_CONFIGURATION}"
 submission_window = 10
 advance_blocks = 0
 max_weight = 512
-value_provider_base_url = "${VALUE_PROVIDER_URL}"
+value_provider_url = "${FAST_UPDATES_VALUE_PROVIDER_URL}"
 
 [transactions]
 gas_limit = 8000000
