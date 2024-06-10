@@ -83,7 +83,7 @@ Instructions for the Hardhat deployment task:
     "delegation": {
       "address": "0x95288e962ff1893ef6c32ad4143fffb12e1eb15f",
       "privateKey": "<private key hex>"
-    }
+    },
     "sortitionPrivateKey": "<private key hex>"
   }
 ]
