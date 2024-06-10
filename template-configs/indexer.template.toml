@@ -10,19 +10,16 @@ new_block_check_millis = 1000 # interval for checking for new blocks
 contract_address = "$SUBMISSION" # Submission
 func_sig = "6c532fae"
 status = true
-collect_events = true
 
 [[indexer.collect_transactions]]
 contract_address = "$SUBMISSION" # Submission
 func_sig = "9d00c9fd"
 status = true
-collect_events = true
 
 [[indexer.collect_transactions]]
 contract_address = "$SUBMISSION" # Submission
 func_sig = "57eed580"
 status = true
-collect_events = true
 
 [[indexer.collect_transactions]]
 contract_address = "$RELAY" # Relay
