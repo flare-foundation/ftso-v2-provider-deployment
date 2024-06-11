@@ -121,6 +121,21 @@ yarn hardhat --network songbird register-entities
 yarn hardhat --network coston2 register-entities
 ```
 
+In case of Songbird, you should register your public sortition key manually. First generate a verification of
+your sortition key aka. the signature of the identity address
+
+```
+docker run --rm ghcr.io/flare-foundation/fast-updates/go-client:latest keygen --key "<sortitionPrivateKey in hex>" --address "<identity address in hex>"
+```
+
+At this point you should have the following information:
+- Sortition public key parts X and Y (obtained when generating the sortition key, see [here](https://github.com/flare-foundation/fast-updates/tree/main/go-client)
+on how to obtain public key out of the private one)
+- Verification obtained in the last step
+
+Using the `EntityManager` smart contract, which can be accessed [here](https://songbird-explorer.flare.network/address/0x46C417D0760198E94fee455CE0e223262a3D0049/write-contract#address-tabs),
+call the function `registerPublicKey` with input `(sortitionPubKeyX, sortitionPubKeyY, verificationData)` from the identity address.
+
 ## Install dependencies and setup .env
 
 You will need:
