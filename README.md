@@ -135,6 +135,7 @@ on how to obtain public key out of the private one)
 
 Using the `EntityManager` smart contract, which can be accessed [here](https://songbird-explorer.flare.network/address/0x46C417D0760198E94fee455CE0e223262a3D0049/write-contract#address-tabs),
 call the function `registerPublicKey` with input `(sortitionPubKeyX, sortitionPubKeyY, verificationData)` from the identity address.
+Note that the registration will only take effect in the next reward epoch, and you won't be able to submit updates until then.
 
 ## Install dependencies and setup .env
 
