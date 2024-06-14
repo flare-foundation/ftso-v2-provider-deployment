@@ -21,15 +21,14 @@ main() {
 
     if [ -d "mounts" ] || [ -f "mounts" ]; then
         echo "cleaning configs from previous runs:"
-        echo "rm -r mounts"
-        rm -r "mounts"
+        echo "rm -rf mounts/*"
+        rm -rf "mounts/*"
     fi
     echo ""
 
     mount_dirs=(
         "mounts/client/"
         "mounts/indexer/"
-        "mounts/scaling/"
         "mounts/fast-updates/"
     )
 
@@ -40,7 +39,7 @@ main() {
     done
     echo ""
 
-    echo "writing configs for indexer, client, scaling and fast-updates"
+    echo "writing configs for indexer, client and fast-updates"
 
     # read contract adresses
     export SUBMISSION=$(get_address_by_name "Submission")
@@ -70,6 +69,12 @@ main() {
         -H "Content-Type: application/json" \
         --data '{"method":"eth_blockNumber","params":[],"id":1,"jsonrpc":"2.0"}' \
         | jq -r '.result')
+
+    if [ -z "$block_hex" ]; then
+        echo "ERROR: could not fetch block number from $NODE_RPC_URL"
+        exit 1
+    fi
+
     export INDEXER_START_BLOCK=$((16#${block_hex/0x/} - 1000000))
 
     # write configs
@@ -83,11 +88,6 @@ main() {
     mkdir -p "mounts/client"
     CONFIG_FILE="mounts/client/config.toml"
     envsubst < "template-configs/client.template.toml" > "$CONFIG_FILE"
-
-    # scaling
-    mkdir -p "mounts/scaling"
-    CONFIG_FILE="mounts/scaling/.env"
-    envsubst < "template-configs/scaling.env" > "$CONFIG_FILE"
     
     # fast updates
     mkdir -p "mounts/fast-updates"
