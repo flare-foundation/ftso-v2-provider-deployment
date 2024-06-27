@@ -1,4 +1,11 @@
 services:
+  init:
+    profiles: [scaling, fast-updates]
+    image: flarefoundation/ftso-v2-provider-deployment-init:latest
+    volumes:
+      - ./:/app
+    command: sh -c "cd /app && bash populate_config.sh"
+
   indexer-db:
     profiles: [scaling]
     container_name: ${COMPOSE_PROJECT_NAME}-indexer-db
@@ -21,6 +28,8 @@ services:
       - ./mounts/indexer/config.toml:/app/config.toml
     restart: unless-stopped
     depends_on:
+      init:
+        condition: service_completed_successfully
       indexer-db:
         condition: service_healthy
 
@@ -28,11 +37,35 @@ services:
     profiles: [scaling]
     container_name: ${COMPOSE_PROJECT_NAME}-data-provider
     image: ghcr.io/flare-foundation/ftso-scaling:latest
-    env_file:
-      - ./mounts/scaling/.env
+    environment:
+      - LOG_LEVEL=debug
+      # Lib config addresses "local-test" | "from-env" | "coston";
+      - NETWORK=${NETWORK}
+      # FTSO protocol data provider deploy settings
+      - DATA_PROVIDER_CLIENT_PORT=3100
+      - DATA_PROVIDER_CLIENT_BASE_PATH=
+      - DATA_PROVIDER_CLIENT_API_KEYS=12345,abcdef,abc123
+      - VOTING_ROUND_HISTORY_SIZE=86400
+      # DB credentials and settings (for connecting to FSP C-Chain indexer database)
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - DB_HOST=indexer-db
+      - DB_PORT=3306
+      - DB_NAME=flare_ftso_indexer
+      - DB_REQUIRED_INDEXER_HISTORY_TIME_SEC=1209600
+      - INDEXER_TOP_TIMEOUT=5
+      # Feed value provider connection url
+      - VALUE_PROVIDER_BASE_URL=${VALUE_PROVIDER_URL}
+      - VALUE_PROVIDER_CLIENT_PORT=3101
+      - VALUE_PROVIDER_CLIENT_BASE_PATH=
     command: "node dist/apps/ftso-data-provider/apps/ftso-data-provider/src/main.js"
     depends_on:
-      - indexer
+      init:
+        condition: service_completed_successfully
+      indexer:
+        condition: service_started
+      feed-value-provider:
+        condition: service_started
 
   client:
     profiles: [scaling]
@@ -47,7 +80,21 @@ services:
       PROTOCOL_MANAGER_SUBMIT_SIGNATURES_PRIVATE_KEY: ${SIGNATURES_PK}
       PROTOCOL_X_API_KEY_100: "abcdef"
     depends_on:
-      - indexer
+      init:
+        condition: service_completed_successfully
+      indexer:
+        condition: service_started
+
+  # !!! Replace image with custom implementation !!!
+  feed-value-provider:
+    profiles: [scaling]
+    container_name: ${COMPOSE_PROJECT_NAME}-feed-value-provider
+    image: ghcr.io/flare-foundation/ftso-v2-example-value-provider:latest
+    environment:
+      - VALUE_PROVIDER_IMPL=fixed
+      - LOG_LEVEL=debug
+      - VALUE_PROVIDER_CLIENT_PORT=3101
+      - VALUE_PROVIDER_CLIENT_BASE_PATH=
 
   fast-updates:
     profiles: [fast-updates]
@@ -60,7 +107,10 @@ services:
       ACCOUNTS: ${FAST_UPDATES_ACCOUNTS}
       SORTITION_PRIVATE_KEY: ${FAST_UPDATES_SORTITION_PRIVATE_KEY}
     depends_on:
-      - indexer
+      init:
+        condition: service_completed_successfully
+      indexer:
+        condition: service_started
 
 volumes:
   indexer_data:
