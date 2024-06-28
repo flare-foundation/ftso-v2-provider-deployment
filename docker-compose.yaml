@@ -31,6 +31,7 @@ services:
     env_file:
       - ./mounts/scaling/.env
     command: "node dist/apps/ftso-data-provider/apps/ftso-data-provider/src/main.js"
+    stop_grace_period: 135s # Voting round 90s + reveal deadline 45s
     depends_on:
       - indexer
 
@@ -46,7 +47,9 @@ services:
       PROTOCOL_MANAGER_SUBMIT_PRIVATE_KEY: ${SUBMIT_PK}
       PROTOCOL_MANAGER_SUBMIT_SIGNATURES_PRIVATE_KEY: ${SIGNATURES_PK}
       PROTOCOL_X_API_KEY_100: "abcdef"
+    stop_grace_period: 135s # Voting round 90s + reveal deadline 45s
     depends_on:
+      - data-provider
       - indexer
 
   fast-updates:
