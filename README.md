@@ -119,7 +119,7 @@ yarn hardhat --network songbird register-entities
 
 # if coston2
 yarn hardhat --network coston2 register-entities
-yarn hardhat --network coston register-public-keys
+yarn hardhat --network coston2 register-public-keys
 ```
 
 In case of Songbird, you should register your public sortition key manually. First generate a verification of
