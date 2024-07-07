@@ -116,6 +116,7 @@ yarn hardhat --network coston register-public-keys
 
 # if songbird
 yarn hardhat --network songbird register-entities
+yarn hardhat --network songbird register-public-keys
 
 # if coston2
 yarn hardhat --network coston2 register-entities
