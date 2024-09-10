@@ -107,7 +107,7 @@ COSTON2_RPC=rpctocoston2
 CHAIN_CONFIG="coston2"
 
 # if flare
-FLARE=rpctoflare
+FLARE_RPC=rpctoflare
 CHAIN_CONFIG="flare"
 ```
 **Note 1: do not use .env.template, instead just create .env using above example or running tasks will error**
