@@ -47,6 +47,8 @@ Important: protocol operation uses normalized weights, and the delegation accoun
 Account registration is handled by the `EntityManager` smart contract, which can be accessed:
 - for [Coston](https://coston-explorer.flare.network/address/0x60A848E5Da796D741e559c170E851FC813061217/write-contract#address-tabs).
 - for [Songbird](https://songbird-explorer.flare.network/address/0x46C417D0760198E94fee455CE0e223262a3D0049/write-contract#address-tabs).
+- for [Coston2](https://coston2-explorer.flare.network/address/0xE62c5557210a5D095BfC2fDc8B2b5D64609cfDf1?tab=write_contract).
+- for [Flare](https://flare-explorer.flare.network/address/0x134b3311C6BdeD895556807a30C7f047D99DfdC2).
 
 The required contract invocation steps can be found in this [deployment task](https://github.com/flare-foundation/flare-smart-contracts-v2/blob/main/deployment/tasks/register-entities.ts#L33). You can check out the smart contract repo and run the task itself, or register accounts manually via the explorer UI link above. (It only needs to be done once).
 
@@ -103,6 +105,10 @@ CHAIN_CONFIG="songbird"
 # if coston2
 COSTON2_RPC=rpctocoston2
 CHAIN_CONFIG="coston2"
+
+# if flare
+FLARE=rpctoflare
+CHAIN_CONFIG="flare"
 ```
 **Note 1: do not use .env.template, instead just create .env using above example or running tasks will error**
 
@@ -121,9 +127,13 @@ yarn hardhat --network songbird register-public-keys
 # if coston2
 yarn hardhat --network coston2 register-entities
 yarn hardhat --network coston2 register-public-keys
+
+# if flare
+yarn hardhat --network flare register-entities
+yarn hardhat --network flare register-public-keys
 ```
 
-In case of Songbird, you should register your public sortition key manually. First generate a verification of
+In case of Flare, you should register your public sortition key manually. First generate a verification of
 your sortition key aka. the signature of the identity address
 
 ```
