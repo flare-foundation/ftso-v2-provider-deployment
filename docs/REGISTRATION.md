@@ -26,7 +26,7 @@ All 5 addresses will need to be funded for gas fees.
 
 You can register above keys via `EntityManager` contract by first calling `propose...Address` with your identity address and then calling `confirm...Address` with proposed address.
 
-If you have a safe environment to work with you can register your entity with a script by following [REGISTER_TASK.md](docs/REGISTER_TASK.md).
+If you have a safe environment to work with you can register your entity with a script by following [REGISTER_TASK.md](REGISTER_TASK.md).
 
 ## Fast Updates
 
@@ -43,8 +43,8 @@ docker run --rm ghcr.io/flare-foundation/fast-updates/go-client keygen
 
 You can register above generated key via `EntityManager` contract by calling `registerPublicKey` with your identity address.
 
-If you have a safe environment to work with you can register your entity with a script by following [REGISTER_TASK.md](docs/REGISTER_TASK.md).
+If you have a safe environment to work with you can register your entity with a script by following [REGISTER_TASK.md](REGISTER_TASK.md).
 
 ## Validator nodes
 
-Your validator nodes need to be registered with the Entity system. You can do this via `EntityManager` contract by calling `registerNodeId` with your identity address for each of your validator nodes. The three required values can be generated as described in [VALIDATOR_NODE.md](docs/VALIDATOR_NODE.md).
+Your validator nodes need to be registered with the Entity system. You can do this via `EntityManager` contract by calling `registerNodeId` with your identity address for each of your validator nodes. The three required values can be generated as described in [VALIDATOR_NODE.md](VALIDATOR_NODE.md).
