@@ -1,4 +1,6 @@
-# FTSO V2 Overview
+# ftso-v2-provider-deployment
+
+## FTSOV2 Overview
 
 ![Overview](Overview.png)
 
@@ -12,7 +14,7 @@ A data provider system for FTSOv2 consists of the following components:
 
 Reference implementations are provided for **Indexer**, **Flare System Client**, **Data Provider**, **Fast Updats Client**, and providers are expected to plug in their own **Feed Value Provider** implementing a specific REST API (there is an sample implementation for testing).
 
-## Operation
+### Operation
 
 The following is a very simplified description of a single voting round operation.
 
@@ -26,158 +28,28 @@ Additionally, once in a reward epoch the **System Client** triggers voter regist
 
 **Data Provider** obtains all commit and reveal data straight from encoded transaction calldata recorded in the indexer database. All calls to `Submission` contract are simply empty function invocations, with the actual submission data provided as additional calldata on the transaction.
 
-# Deployment
+## Deployment
 
-## Register accounts
+### Entity registration
 
-Note: Account registration is required for FTSOv2 participation and must be done before starting any further deployment steps.
+You will need to setup your Entity by following [REGISTRATION.md](docs/REGISTRATION.md).
 
-Each data provider in the FTSOv2 system must set up and register the following 5 (distinct) accounts:
+### Dependencies
 
-- `Identity`. Main identity account of the voter. On mainnets this should be held in cold storage, it's required for initial data provider setup but not used during each round on voting.
-- `Submit`. Used for sending commit and reveal transactions.
-- `SubmitSignatures`. Used for sending voting round result signature transactions. (To avoid nonce conflicts, **System Client** uses multiple accounts for submitting transactions).
-- `SigningPolicy`. Used for signature generation during the voting round, and reward epoch signing policy signing (it's a system protocol ran once during reward epoch to establish reward epoch settings, including valid voters and their weights).
-- `Delegation`. Account to which community should delegate funds (using WNat contract) to increase the vote power of the voter (identity/entity) - and also to later get the rewards.
-
-Accounts need to be funded for gas fees. The delegation account is used of establishing voter power, which can be achieved by wrapping funds directly or by delegation from other accounts. Wrapping can be done via the [development portal](https://governance.dev.aflabs.org/) (make sure to pick the correct network for testnets and via [portal](https://portal.flare.network) for mainnets. 
-
-Important: protocol operation uses normalized weights, and the delegation account should have <span style="color:red">at least 150 WCFLR</span> to obtain a non-0 vote power.
-
-Account registration is handled by the `EntityManager` smart contract, which can be accessed:
-- for [Coston](https://coston-explorer.flare.network/address/0x60A848E5Da796D741e559c170E851FC813061217/write-contract#address-tabs).
-- for [Songbird](https://songbird-explorer.flare.network/address/0x46C417D0760198E94fee455CE0e223262a3D0049/write-contract#address-tabs).
-- for [Coston2](https://coston2-explorer.flare.network/address/0xE62c5557210a5D095BfC2fDc8B2b5D64609cfDf1?tab=write_contract).
-- for [Flare](https://flare-explorer.flare.network/address/0x134b3311C6BdeD895556807a30C7f047D99DfdC2).
-
-The required contract invocation steps can be found in this [deployment task](https://github.com/flare-foundation/flare-smart-contracts-v2/blob/main/deployment/tasks/register-entities.ts#L33). You can check out the smart contract repo and run the task itself, or register accounts manually via the explorer UI link above. (It only needs to be done once).
-
-Additionally for fast updates:
-- Sortition key has to be generated (you can read more [here](https://github.com/flare-foundation/fast-updates/tree/main/go-client)). You can generate it using:
-```
-docker run --rm ghcr.io/flare-foundation/fast-updates/go-client:latest keygen
-```
-- Accounts for submission need to be generated and funded for gas prices. These can be any accounts not used for the 5 accounts above and don't need to be regsitered with the system in any way. We suggest using three to avoid nonce conflicts. You will need to pass their private keys in the `.env` file separated by commas.
-
-Instructions for the Hardhat deployment task:
-- Check out repo: https://github.com/flare-foundation/flare-smart-contracts-v2/
-- Build repo: `yarn` then `yarn c`
-- Create a JSON file with account keys:
-```
-[
-  {
-    "identity": {
-      "address": "0xca84d6086c5b32212a0cf1638803355d7be31482",
-      "privateKey": "<private key hex>"
-    },
-    "submit": {
-      "address": "0x7961de7ad159106a79187379a22d21c1e5a924db",
-      "privateKey": "<private key hex>"
-    },
-    "submitSignatures": {
-      "address": "0x7570c09c17f79aa50bab7ba385c0d5ca12c5b4d3",
-      "privateKey": "<private key hex>"
-    },
-    "signingPolicy": {
-      "address": "0x9ffa9cf5f677e925b6ecacbf66caefd7e1b9883a",
-      "privateKey": "<private key hex>"
-    },
-    "delegation": {
-      "address": "0x95288e962ff1893ef6c32ad4143fffb12e1eb15f",
-      "privateKey": "<private key hex>"
-    },
-    "sortitionPrivateKey": "<private key hex>"
-  }
-]
-```
-- Set the following env vars in `.env`:
-```
-ENTITIES_FILE_PATH="<path to account keys JSON>"
-
-# if coston
-COSTON_RPC=rpctocoston
-CHAIN_CONFIG="coston"
-
-# if songbird
-SONGBIRD_RPC=rpctosongbird
-CHAIN_CONFIG="songbird"
-
-# if coston2
-COSTON2_RPC=rpctocoston2
-CHAIN_CONFIG="coston2"
-
-# if flare
-FLARE_RPC=rpctoflare
-CHAIN_CONFIG="flare"
-```
-**Note 1: do not use .env.template, instead just create .env using above example or running tasks will error**
-
-**Note 2: do not use public rpc because you will get rate limited during the task**
-
-- Run tasks:
-```
-# if coston
-yarn hardhat --network coston register-entities
-yarn hardhat --network coston register-public-keys
-
-# if songbird
-yarn hardhat --network songbird register-entities
-yarn hardhat --network songbird register-public-keys
-
-# if coston2
-yarn hardhat --network coston2 register-entities
-yarn hardhat --network coston2 register-public-keys
-
-# if flare
-yarn hardhat --network flare register-entities
-yarn hardhat --network flare register-public-keys
-```
-
-In case of Flare, you should register your public sortition key manually. First generate a verification of
-your sortition key aka. the signature of the identity address
-
-```
-docker run --rm ghcr.io/flare-foundation/fast-updates/go-client:latest keygen --key "<sortitionPrivateKey in hex>" --address "<identity address in hex>"
-```
-
-At this point you should have the following information:
-- Sortition public key parts X and Y (obtained when generating the sortition key, see [here](https://github.com/flare-foundation/fast-updates/tree/main/go-client)
-on how to obtain public key out of the private one)
-- Verification obtained in the last step
-
-Using the `EntityManager` smart contract, which can be accessed [here](https://songbird-explorer.flare.network/address/0x46C417D0760198E94fee455CE0e223262a3D0049/write-contract#address-tabs),
-call the function `registerPublicKey` with input `(sortitionPubKeyX, sortitionPubKeyY, verificationData)` from the identity address.
-Note that the registration will only take effect in the next reward epoch, and you won't be able to submit updates until then.
-
-## Install dependencies and setup .env
-
-You will need:
+You will also need to install some dependencies on your system:
 - [jq](https://jqlang.github.io/jq/)
-    - `brew install jq`
-    - `apt-get install jq`
-    - `pacman -S jq`
 - [envsubst](https://www.gnu.org/software/gettext/manual/html_node/envsubst-Invocation.html)
-    - (macOS only) `brew install gettext`
 - [docker](https://www.docker.com/)
 - [bash] (macOs only for updated version) `brew install bash`
 
-Setup `.env`:
-- Use `.env.example` to create `.env` file, eg.: using `cp .env.example .env`
-- Set private keys for required accounts in the `.env` file.
-- Set `NODE_RPC_URL` and `NODE_API_KEY` (optional) with your Coston or Songbird node RPC endpoint in the `.env` file. 
-- Set `VALUE_PROVIDER_URL` to the endpoint of your feed value provider. Leave default if using example provider below
-- Set `FAST_UPDATES_ACCOUNTS` to private keys of fast updates submission accounts separated by commas
-- Set `FAST_UPDATES_SORTITION_PRIVATE_KEY` to the key that was registered with the network
+### Stack deployment
+Use `.env.example` to create `.env` file (eg.: using `cp .env.example .env`) and fill out all values.
 
 Populate configs for provider stack by running `./populate_config.sh`. **NOTE: You'll need to rerun this command if you change your `.env` file.**
 
-## Start provider stack
-Since docker-compose.yaml is provided you can start everything with `docker compose up -d`
-and stop everything with `docker compose down`. Database is persisted in a named docker volume. 
-If you need to wipe database you need to remove the volume manually. When codebase is changed 
-new images need to be pulled with `docker compose pull`
+Since docker-compose.yaml is provided you can start everything with `docker compose up -d` and stop everything with `docker compose down`. Database is persisted in a named docker volume. If you need to wipe database you need to remove the volume manually. When upstream codebase is changed new images need to be pulled with `docker compose pull`.
 
-## Feed value provider
+### Feed value provider
 
 Start your own feed value provider or alternatively use example provider:
 ```bash
@@ -203,7 +75,7 @@ You should see the following in the logs:
 WARN [FixedFeed] Initializing FixedFeed, will return 0.01 for all feeds.
 ```
 
-## How do I know it's working
+### How do I know it's working
 
 You will see various errors initially on `ftso-scaling` and `flare-system-client`, since the data provider will not be registered as a voter for the current reward epoch. There is a time window for voter registration on every reward epoch, and if you leave things running you should eventually see `RegisterVoter success` logged by `flare-system-client`. It should then start submitting data successfully in the *following* reward epoch.
 
