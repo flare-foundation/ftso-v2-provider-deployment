@@ -60,7 +60,7 @@ starting_reward_epoch = 0
 grace_period_end_offset = "65s"
 
 [gas_submit]
-gas_price_multiplier = 1.5
+gas_price_multiplier = 5
 gas_price_fixed = 0
 gas_limit = 2500000
 
