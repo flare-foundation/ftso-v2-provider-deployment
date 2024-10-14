@@ -27,6 +27,11 @@ func_sig = "b59589d1"
 status = true
 collect_events = true
 
+[[indexer.collect_transactions]]
+contract_address = "0xbA35e39D01A3f5710d1e43FC61dbb738B68641c4" # Songbird: Old Relay
+func_sig = "b59589d1"
+status = true
+collect_events = true
 
 [[indexer.collect_logs]]
 contract_address = "$FLARE_SYSTEMS_MANAGER" # FlareSystemsManager
@@ -49,11 +54,19 @@ contract_address = "$RELAY" # Relay
 topic = "undefined"
 
 [[indexer.collect_logs]]
+contract_address = "0xbA35e39D01A3f5710d1e43FC61dbb738B68641c4" # Songbird: Old Relay
+topic = "undefined"
+
+[[indexer.collect_logs]]
 contract_address = "$FTSO_REWARD_OFFERS_MANAGER" # FtsoRewardOffersManager
 topic = "undefined"
 
 [[indexer.collect_logs]]
 contract_address = "$FAST_UPDATER" # FastUpdater
+topic = "undefined"
+
+[[indexer.collect_logs]]
+contract_address = "0x70e8870ef234EcD665F96Da4c669dc12c1e1c116" # Songbird: Old FastUpdater
 topic = "undefined"
 
 [[indexer.collect_logs]]

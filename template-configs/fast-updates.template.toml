@@ -1,5 +1,4 @@
 [client]
-fast_updater_address = "${FAST_UPDATER}"
 submission_address = "${SUBMISSION}"
 flare_system_manager = "${FLARE_SYSTEMS_MANAGER}"
 incentive_manager_address = "${FAST_UPDATE_INCENTIVE_MANAGER}"
