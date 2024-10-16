@@ -28,6 +28,12 @@ status = true
 collect_events = true
 
 [[indexer.collect_transactions]]
+contract_address = "0x0D462d2Fec11554D64F52D7c5A5C269d748037aD" # Songbird: New Relay Pre Patch
+func_sig = "b59589d1"
+status = true
+collect_events = true
+
+[[indexer.collect_transactions]]
 contract_address = "0xbA35e39D01A3f5710d1e43FC61dbb738B68641c4" # Songbird: Old Relay
 func_sig = "b59589d1"
 status = true
@@ -51,6 +57,10 @@ topic = "undefined"
 
 [[indexer.collect_logs]]
 contract_address = "$RELAY" # Relay
+topic = "undefined"
+
+[[indexer.collect_logs]]
+contract_address = "0x0D462d2Fec11554D64F52D7c5A5C269d748037aD" # Songbird: New Relay Pre Patch
 topic = "undefined"
 
 [[indexer.collect_logs]]
