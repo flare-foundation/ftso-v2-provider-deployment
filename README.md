@@ -1,3 +1,40 @@
+# DEPRECATION
+
+**This repo was deprecated in favor of [flare-systems-deployment](https://github.com/flare-foundation/flare-systems-deployment). You can update by doing these steps:**
+```bash
+# change remote url to new repo
+git remote set-url origin git@github.com:flare-foundation/flare-systems-deployment.git
+
+# fetch new remote
+git fetch origin
+
+# reset git to new repo main branch
+# WARNING: this will remove any changes you might have made to files tracked by git
+# if you wish to preserve such changes, git-stash can be used
+git reset --hard origin/main
+
+# in your .env change COMPOSE_PROFILES to one of the options below
+# to run the full provider stack (this also includes the fdc client) and fast updates client
+COMPOSE_PROFILES=fsp,fast-updates
+# to only run ftso and fast updates - as you are running right now
+COMPOSE_PROFILES=ftso,system-client,fast-updates
+
+# stop current deployment - remove-orphans flag is needed
+# because docker compose service names have been changed
+docker compose down --remove-orphans
+
+# remove old generated configs directory
+# WARNING: this will remove any changes you might have made to generated config files
+# if you wish to preserve such changes consider moving them to template configs
+rm -r mounts
+
+# generate new configs
+./populate_configs.sh
+
+# restart deployment
+docker compose up -d
+```
+
 # ftso-v2-provider-deployment
 
 ## FTSOV2 Overview
