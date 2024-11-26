@@ -3,7 +3,7 @@
 **This repo was deprecated in favor of [flare-systems-deployment](https://github.com/flare-foundation/flare-systems-deployment). You can update by doing these steps:**
 ```bash
 # change remote url to new repo
-git remote set-url origin git@github.com:flare-foundation/flare-systems-deployment.git
+git remote set-url origin https://github.com/flare-foundation/flare-systems-deployment.git
 
 # fetch new remote
 git fetch origin
